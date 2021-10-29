@@ -1,0 +1,9 @@
+[submodule "howto"]
+	path = howto
+	url = git@github.com:pvstodghill/howto.git
+[submodule "stubs"]
+	path = stubs
+	url = git@github.com:pvstodghill/stubs.git
+[submodule "scripts"]
+	path = scripts
+	url = git@github.com:pvstodghill/scripts.git
