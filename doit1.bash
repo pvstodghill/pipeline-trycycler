@@ -1,16 +1,6 @@
 #! /bin/bash
 
-set -e
-set -o pipefail
-
-HOWTO="./scripts/howto -q -T data/tmp -f packages.yaml"
-THREADS=$(nproc --all)
-
-export LC_ALL=C
-
-# ------------------------------------------------------------------------
-
-. config.bash
+. doit-preamble.bash
 
 INPUTS=data/00_inputs
 
@@ -24,7 +14,7 @@ FILTLONG=data/01_filtlong
 mkdir -p ${FILTLONG}
 
 echo 1>&2 '# Running filtlong...'
-${HOWTO} filtlong --min_length 1000 --keep_percent 95 \
+filtlong --min_length 1000 --keep_percent 95 \
        ${INPUTS}/raw_nanopore.fastq.gz \
     | gzip > ${FILTLONG}/filtered_nanopore.fastq.gz
 
@@ -33,7 +23,7 @@ ${HOWTO} filtlong --min_length 1000 --keep_percent 95 \
 SUBSAMPLES=data/02_subsamples
 mkdir -p ${SUBSAMPLES}
 
-mean_length=$(${HOWTO} seqtk comp ${FILTLONG}/filtered_nanopore.fastq.gz | awk '{count++; bases += $2} END{print bases/count}')
+mean_length=$(seqtk comp ${FILTLONG}/filtered_nanopore.fastq.gz | awk '{count++; bases += $2} END{print bases/count}')
 read_count=$(echo $SAMPLE_DEPTH"*"$GENOME_SIZE"/"$mean_length | bc)
 
 echo mean_length=$mean_length
@@ -75,6 +65,9 @@ function sample_letter {
 }
 
 NUM_ASSEMBLERS=0
+if [ "$USE_CANU" ] ; then
+    NUM_ASSEMBLERS=$[ $NUM_ASSEMBLERS + 1 ]
+fi
 if [ "$USE_FLYE" ] ; then
     NUM_ASSEMBLERS=$[ $NUM_ASSEMBLERS + 1 ]
 fi
@@ -94,7 +87,7 @@ fi
 for i in $(seq 0 $[$NUM_ASSEMBLERS * $ASMS_PER_PKG - 1]) ; do
     l=$(sample_letter $i)
     echo "# Generating sample $l..."
-    ${HOWTO} seqtk sample -s "$l" ${FILTLONG}/filtered_nanopore.fastq.gz "$read_count" \
+    seqtk sample -s "$l" ${FILTLONG}/filtered_nanopore.fastq.gz "$read_count" \
     	| paste - - - - \
     	| shuf \
     	| tr '\t' '\n' > ${SUBSAMPLES}/sample_"$l".fastq
@@ -109,13 +102,31 @@ mkdir -p ${ASSEMBLIES}/tmp
 
 i=0
 
+# canu
+if [ "$USE_CANU" ] ; then
+    for j in $(seq 1 $ASMS_PER_PKG) ; do
+	l=$(sample_letter $i)
+	echo "# Running canu $j -> $l..."
+
+	mkdir -p ${ASSEMBLIES}/tmp/canu_${l} 
+	canu -p canu -d ${ASSEMBLIES}/tmp/canu_${l} \
+	     genomeSize="$GENOME_SIZE" \
+	     -corrected -trimmed \
+	     -nanopore ${SUBSAMPLES}/sample_${l}.fastq.gz
+	cp ${ASSEMBLIES}/tmp/canu_${l}/canu.contigs.fasta \
+	   ${ASSEMBLIES}/assembly_${l}.fna
+
+	i=$[ $i + 1 ]
+    done
+fi
+
 # flye
 if [ "$USE_FLYE" ] ; then
     for j in $(seq 1 $ASMS_PER_PKG) ; do
 	l=$(sample_letter $i)
 	echo "# Running flye $j -> $l..."
 
-	${HOWTO} flye --nano-raw ${SUBSAMPLES}/sample_${l}.fastq.gz \
+	flye --nano-raw ${SUBSAMPLES}/sample_${l}.fastq.gz \
     		 --threads "$THREADS" \
     		 --out-dir ${ASSEMBLIES}/tmp/flye_${l} 
 	cp ${ASSEMBLIES}/tmp/flye_${l}/assembly.fasta \
@@ -132,10 +143,10 @@ if [ "$USE_MINIPOLISH" ] ; then
 	echo "# Running minipolish $j -> $l..."
 
 
-	${HOWTO} miniasm_and_minipolish.sh \
+	./scripts/miniasm_and_minipolish.sh \
     		 ${SUBSAMPLES}/sample_${l}.fastq.gz "$THREADS" \
     		 > ${ASSEMBLIES}/tmp/minipolish_${l}.gfa
-	${HOWTO} any2fasta ${ASSEMBLIES}/tmp/minipolish_${l}.gfa \
+	any2fasta ${ASSEMBLIES}/tmp/minipolish_${l}.gfa \
     		 > ${ASSEMBLIES}/assembly_${l}.fna
 
 	i=$[ $i + 1 ]
@@ -149,7 +160,7 @@ if [ "$USE_RAVEN" ] ; then
 	echo "# Running raven $j -> $l..."
 
 
-	${HOWTO} raven --threads "$THREADS" ${SUBSAMPLES}/sample_${l}.fastq.gz \
+	raven --threads "$THREADS" ${SUBSAMPLES}/sample_${l}.fastq.gz \
     		 > ${ASSEMBLIES}/assembly_${l}.fna
 	rm raven.cereal
 
@@ -163,7 +174,7 @@ if [ "$USE_REDBEAN" ] ; then
 	l=$(sample_letter $i)
 	echo "# Running wtdbg2 $j -> $l..."
 
-	${HOWTO} wtdbg2.pl -o ${ASSEMBLIES}/tmp/wtdbg2_${l} \
+	wtdbg2.pl -o ${ASSEMBLIES}/tmp/wtdbg2_${l} \
     		 -g "$GENOME_SIZE" -t "$THREADS" -x ont \
     		 ${SUBSAMPLES}/sample_${l}.fastq.gz
 	cp ${ASSEMBLIES}/tmp/wtdbg2_${l}.cns.fa \
@@ -197,7 +208,7 @@ CLUSTERS=data/04_clusters
 
 echo 1>&2 '# Running "trycycler cluster"...'
 
-${HOWTO} trycycler cluster \
+trycycler cluster \
        --threads ${THREADS} \
        --assemblies ${ASSEMBLIES}/*.fna \
        --reads ${FILTLONG}/filtered_nanopore.fastq.gz \
@@ -214,7 +225,7 @@ for cluster_dir in ${CLUSTERS}/cluster_00* ; do
 
     echo 1>&2 '# Running "trycycler reconcile" on '$cluster_name'...'
 
-    ${HOWTO} trycycler reconcile \
+    trycycler reconcile \
 	     --threads ${THREADS} \
 	     --reads ${FILTLONG}/filtered_nanopore.fastq.gz \
 	     --cluster_dir ${cluster_dir}
@@ -224,8 +235,6 @@ for cluster_dir in ${CLUSTERS}/cluster_00* ; do
 done
 
 # -----
-
-set +x
 
 echo 1>&2 ''
 

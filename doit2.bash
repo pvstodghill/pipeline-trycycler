@@ -1,18 +1,7 @@
 #! /bin/bash
 
-set -e
-set -o pipefail
+. doit-preamble.bash
 
-HOWTO="./scripts/howto -q -T data/tmp -f packages.yaml"
-THREADS=$(nproc --all)
-
-export LC_ALL=C
-
-# ------------------------------------------------------------------------
-
-. config.bash
-
-# ------------------------------------------------------------------------
 
 FILTLONG=data/01_filtlong
 CLUSTERS=data/04_clusters
@@ -83,7 +72,7 @@ rm -rf ${CLUSTERS}
 
 echo 1>&2 '# Running "trycycler cluster"...'
 
-${HOWTO} trycycler cluster \
+trycycler cluster \
        --threads ${THREADS} \
        --assemblies ${ASSEMBLIES}/*.fna \
        --reads ${FILTLONG}/filtered_nanopore.fastq.gz \
@@ -100,7 +89,7 @@ for cluster_dir in ${CLUSTERS}/cluster_00* ; do
 
     echo 1>&2 '# Running "trycycler reconcile" on '$cluster_name'...'
 
-    ${HOWTO} trycycler reconcile \
+    trycycler reconcile \
 	     --threads ${THREADS} \
 	     --reads ${FILTLONG}/filtered_nanopore.fastq.gz \
 	     --cluster_dir ${cluster_dir} \
@@ -112,8 +101,6 @@ done
 
 # -----
 
-set +x
-
 echo 1>&2 ''
 
 for cluster_dir in ${CLUSTERS}/cluster_00* ; do
@@ -124,4 +111,11 @@ for cluster_dir in ${CLUSTERS}/cluster_00* ; do
 	echo 1>&2 '#' $cluster_name FAILED
     fi
 done
+
+# ------------------------------------------------------------------------
+# Done.
+# ------------------------------------------------------------------------
+
+echo 1>&2 ''
+echo 1>&2 '# Done.'
 

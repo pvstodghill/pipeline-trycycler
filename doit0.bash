@@ -1,16 +1,6 @@
 #! /bin/bash
 
-set -e
-set -o pipefail
-
-HOWTO="./scripts/howto -q -T data/tmp -f packages.yaml"
-THREADS=$(nproc --all)
-
-export LC_ALL=C
-
-# ------------------------------------------------------------------------
-
-. config.bash
+. doit-preamble.bash
 
 # ------------------------------------------------------------------------
 # Step 0. Set up

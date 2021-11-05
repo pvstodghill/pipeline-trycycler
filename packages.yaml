@@ -5,6 +5,14 @@ version: 0.4.2__2020-11-02
 commands:
   - any2fasta
   
+# https://github.com/marbl/canu
+---
+image: pvstodghill/canu
+version: 2.2__2021-11-05
+java: true
+commands:
+  - canu
+
 # https://www.ncbi.nlm.nih.gov/books/NBK179288/
 ---
 image: pvstodghill/edirect
