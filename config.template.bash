@@ -35,9 +35,8 @@ if [ -e /programs/docker/bin/docker1 ] ; then
     export HOWTO_DOCKER_CMD=/programs/docker/bin/docker1
 fi
 
-# if DONT_USE_STUBS is set to any non-empty string, then don't use
-# ./stubs/
-#DONT_USE_STUBS=yes
+# Uncomment to get packages from HOWTO
+PACKAGES_FROM=howto
 
 # uncomment to use conda
 #CONDA_EXE=$(type -p conda)
