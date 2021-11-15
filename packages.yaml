@@ -5,6 +5,21 @@ version: 0.4.2__2020-11-02
 commands:
   - any2fasta
   
+# https://github.com/BenLangmead/bowtie2
+---
+image: pvstodghill/bowtie2
+version: 2.4.4__2021-09-01
+commands:
+  - bowtie2
+  - bowtie2-align-l
+  - bowtie2-align-s
+  - bowtie2-build
+  - bowtie2-build-l
+  - bowtie2-build-s
+  - bowtie2-inspect
+  - bowtie2-inspect-l
+  - bowtie2-inspect-s
+
 # https://github.com/marbl/canu
 ---
 image: pvstodghill/canu
@@ -13,7 +28,7 @@ java: true
 commands:
   - canu
 
-# https://www.ncbi.nlm.nih.gov/books/NBK179288/
+# ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/
 ---
 image: pvstodghill/edirect
 version: 15.7.20210909__2021-09-10
@@ -98,6 +113,272 @@ commands:
   - xtract.Linux
   - xy-plot
 
+---
+image: pvstodghill/emboss
+version: 6.6.0__2019-07-05
+commands:
+  - aaindexextract
+  - abiview
+  - acdc
+  - acdgalaxy
+  - acdlog
+  - acdpretty
+  - acdtable
+  - acdtrace
+  - acdvalid
+  - aligncopy
+  - aligncopypair
+  - antigenic
+  - assemblyget
+  - backtranambig
+  - backtranseq
+  - banana
+  - biosed
+  - btwisted
+  - cachedas
+  - cachedbfetch
+  - cacheebeyesearch
+  - cacheensembl
+  - cai
+  - chaos
+  - charge
+  - checktrans
+  - chips
+  - cirdna
+  - codcmp
+  - codcopy
+  - coderet
+  - compseq
+  - consambig
+  - cpgplot
+  - cpgreport
+  - cusp
+  - cutgextract
+  - cutseq
+  - dan
+  - dbiblast
+  - dbifasta
+  - dbiflat
+  - dbigcg
+  - dbtell
+  - dbxcompress
+  - dbxedam
+  - dbxfasta
+  - dbxflat
+  - dbxgcg
+  - dbxobo
+  - dbxreport
+  - dbxresource
+  - dbxstat
+  - dbxtax
+  - dbxuncompress
+  - degapseq
+  - density
+  - descseq
+  - diffseq
+  - distmat
+  - dotmatcher
+  - dotpath
+  - dottup
+  - dreg
+  - drfinddata
+  - drfindformat
+  - drfindid
+  - drfindresource
+  - drget
+  - drtext
+  - edamdef
+  - edamhasinput
+  - edamhasoutput
+  - edamisformat
+  - edamisid
+  - edamname
+  - edialign
+  - einverted
+  - em_cons
+  - em_pscan
+  - embossdata
+  - embossupdate
+  - embossversion
+  - emma
+  - emowse
+  - entret
+  - epestfind
+  - eprimer3
+  - eprimer32
+  - equicktandem
+  - est2genome
+  - etandem
+  - extractalign
+  - extractfeat
+  - extractseq
+  - featcopy
+  - featmerge
+  - featreport
+  - feattext
+  - findkm
+  - freak
+  - fuzznuc
+  - fuzzpro
+  - fuzztran
+  - garnier
+  - geecee
+  - getorf
+  - godef
+  - goname
+  - helixturnhelix
+  - hmoment
+  - iep
+  - infoalign
+  - infoassembly
+  - infobase
+  - inforesidue
+  - infoseq
+  - isochore
+  - jaspextract
+  - jaspscan
+  - jembossctl
+  - lindna
+  - listor
+  - makenucseq
+  - makeprotseq
+  - marscan
+  - maskambignuc
+  - maskambigprot
+  - maskfeat
+  - maskseq
+  - matcher
+  - megamerger
+  - merger
+  - msbar
+  - mwcontam
+  - mwfilter
+  - needle
+  - needleall
+  - newcpgreport
+  - newcpgseek
+  - newseq
+  - nohtml
+  - noreturn
+  - nospace
+  - notab
+  - notseq
+  - nthseq
+  - nthseqset
+  - octanol
+  - oddcomp
+  - ontocount
+  - ontoget
+  - ontogetcommon
+  - ontogetdown
+  - ontogetobsolete
+  - ontogetroot
+  - ontogetsibs
+  - ontogetup
+  - ontoisobsolete
+  - ontotext
+  - palindrome
+  - pasteseq
+  - patmatdb
+  - patmatmotifs
+  - pepcoil
+  - pepdigest
+  - pepinfo
+  - pepnet
+  - pepstats
+  - pepwheel
+  - pepwindow
+  - pepwindowall
+  - plotcon
+  - plotorf
+  - polydot
+  - preg
+  - prettyplot
+  - prettyseq
+  - primersearch
+  - printsextract
+  - profit
+  - prophecy
+  - prophet
+  - prosextract
+  - psiphi
+  - rebaseextract
+  - recoder
+  - redata
+  - refseqget
+  - remap
+  - restover
+  - restrict
+  - revseq
+  - seealso
+  - seqcount
+  - seqmatchall
+  - seqret
+  - seqretsetall
+  - seqretsplit
+  - seqxref
+  - seqxrefget
+  - servertell
+  - showalign
+  - showdb
+  - showfeat
+  - showorf
+  - showpep
+  - showseq
+  - showserver
+  - shuffleseq
+  - sigcleave
+  - silent
+  - sirna
+  - sixpack
+  - sizeseq
+  - skipredundant
+  - skipseq
+  - splitsource
+  - splitter
+  - stretcher
+  - stssearch
+  - supermatcher
+  - syco
+  - taxget
+  - taxgetdown
+  - taxgetrank
+  - taxgetspecies
+  - taxgetup
+  - tcode
+  - textget
+  - textsearch
+  - tfextract
+  - tfm
+  - tfscan
+  - tmap
+  - tranalign
+  - transeq
+  - trimest
+  - trimseq
+  - trimspace
+  - twofeat
+  - union
+  - urlget
+  - variationget
+  - vectorstrip
+  - water
+  - whichdb
+  - wobble
+  - wordcount
+  - wordfinder
+  - wordmatch
+  - wossdata
+  - wossinput
+  - wossname
+  - wossoperation
+  - wossoutput
+  - wossparam
+  - wosstopic
+  - xmlget
+  - xmltext
+  - yank
+
 # https://github.com/OpenGene/fastp
 ---
 image: pvstodghill/fastp
@@ -138,10 +419,62 @@ image: pvstodghill/minipolish
 version: 0.1.3__2021-09-02
 commands:
   - minipolish
-  - miniasm_and_minipolish.sh
-#  - miniasm  # 0.3-r179
-#  - minimap2 # 2.17-r941
+  - miniasm  # 0.3-r179
+  - minimap2 # 2.17-r941
 #  - racon    # v1.4.21
+
+# http://mummer.sourceforge.net/
+---
+image: pvstodghill/mummer
+version: 3.23__2021-10-01
+commands:
+  - combineMUMs
+  - delta-filter
+  - dnadiff
+  - exact-tandems
+  - mapview
+  - mgaps
+  - mummer
+  - mummerplot
+  - nucmer
+  - promer
+  - repeat-match
+  - run-mummer1
+  - run-mummer3
+  - show-aligns
+  - show-coords
+  - show-diff
+  - show-snps
+  - show-tiling
+
+---
+image: pvstodghill/ncbi-blast
+version: 2.10.0plus__2020-01-15
+commands:
+  - blast_formatter
+  - blastdb_aliastool
+  - blastdbcheck
+  - blastdbcmd
+  - blastn
+  - blastp
+  - blastx
+  - cleanup-blastdb-volumes.py
+  - convert2blastmask
+  - deltablast
+  - dustmasker
+  - get_species_taxids.sh
+  - legacy_blast.pl
+  - makeblastdb
+  - makembindex
+  - makeprofiledb
+  - psiblast
+  - rpsblast
+  - rpstblastn
+  - segmasker
+  - tblastn
+  - tblastx
+  - update_blastdb.pl
+  - windowmasker
 
 # https://github.com/xiaochuanle/NECAT
 ---
@@ -164,6 +497,42 @@ version: 1.5.1__2021-09-02
 commands:
   - raven
 
+# https://github.com/samtools/samtools
+---
+image: pvstodghill/samtools
+version: 1.14__2021-10-29
+commands:
+  - ace2sam
+  - bcftools
+  - bgzip
+  - blast2sam.pl
+  - bowtie2sam.pl
+  - color-chrs.pl
+  - export2sam.pl
+  - guess-ploidy.py
+  - htsfile
+  - interpolate_sam.pl
+  - maq2sam-long
+  - maq2sam-short
+  - md5fa
+  - md5sum-lite
+  - novo2sam.pl
+  - plot-bamstats
+  - plot-roh.py
+  - plot-vcfstats
+  - psl2sam.pl
+  - run-roh.pl
+  - sam2vcf.pl
+  - samtools
+  - samtools.pl
+  - seq_cache_populate.pl
+  - soap2sam.pl
+  - tabix
+  - vcfutils.pl
+  - wgsim
+  - wgsim_eval.pl
+  - zoom2sam.pl
+
 # https://github.com/lh3/seqtk
 ---
 image: pvstodghill/seqtk
@@ -174,7 +543,7 @@ commands:
 # https://github.com/rrwick/Trycycler
 ---
 image: pvstodghill/trycycler
-version: 0.5.0__2021-05-03
+version: 0.5.1__2021-11-10
 commands:
   - trycycler
 
@@ -189,7 +558,7 @@ commands:
   - unicycler_scrub
 # - unicycler_check (deprecated)
 
-# https://github.com/ruanjue/wtdbg2
+# https://github.com/ruanjue/wtdbg2 (redbean)
 ---
 image: pvstodghill/wtdbg2
 version: 2.5__2020-11-02

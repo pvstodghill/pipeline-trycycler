@@ -1,5 +1,4 @@
-echo 1>&2 fixme
-exit 1
+#! /bin/bash
 
 PGAP_HOME=$HOME/scratch/pgap
 

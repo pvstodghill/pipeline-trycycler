@@ -36,7 +36,7 @@ case X"$PACKAGES_FROM"X in
 
 	;;
     XhowtoX|XstubsX)
-	export PATH=$(dirname ${BASH_SOURCE[0]})/stubs:"$PATH"
+	export PATH=$(realpath $(dirname ${BASH_SOURCE[0]}))/stubs:"$PATH"
 	;;
     XnativeX)
 	: nothing
@@ -73,3 +73,16 @@ function run_commands {
 set -e
 set -o pipefail
 
+# ------------------------------------------------------------------------
+
+INPUTS=data/00_inputs
+FILTLONG=data/01_filtlong
+ASSEMBLIES=data/02_assemblies
+CLUSTERS=data/03_clusters
+RECONCILED=data/04_clusters
+MEDAKA=data/08_medaka
+FASTP=data/09_fastp 
+NEXTPOLISH=data/10_nextpolish
+UNICYCLER=data/11_unicycler
+NORMALIZED=data/12_normalized
+PGAP_OUT=data/13_pgap

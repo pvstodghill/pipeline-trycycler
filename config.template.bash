@@ -11,15 +11,23 @@ ILLUMINA_DIR=../000NOTES/2020-09-10-more-illumina-brc-downloads/
 R1_FQ_GZ=$ILLUMINA_DIR/*Pag_FIXME_*_R1.fastq.gz
 R2_FQ_GZ=$ILLUMINA_DIR/*Pag_FIXME_*_R2.fastq.gz
 
-#USE_CANU=1
-USE_FLYE=1
-USE_MINIPOLISH=1
-USE_RAVEN=1
-#USE_REDBEAN=1
-#USE_NECAT=1
-
 SAMPLE_DEPTH=50
-ASMS_PER_PKG=5
+
+NUM_CANU_ASSEMBLIES=0
+NUM_FLYE_ASSEMBLIES=5
+NUM_MINIPOLISH_ASSEMBLIES=5
+NUM_NECAT_ASSEMBLIES=0
+NUM_RAVEN_ASSEMBLIES=5
+NUM_REDBEAN_ASSEMBLIES=0
+
+#CLUSTER_ARGS="--distance 0.01" # default
+#CLUSTER_ARGS="--distance 0.02" # more permissive
+#CLUSTER_ARGS="--distance 0.005" # more strict
+
+#RECONCILE_ARGS="--max_indel_size 1000" # default
+#MAKE_DOTPLOTS=true # make dotplots for clusters that fail to reconcile
+
+#SKIP_FASTP=true # Illumina reads are already trimmed
 
 # ------------------------------------------------------------------------
 
