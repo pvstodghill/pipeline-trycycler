@@ -29,6 +29,8 @@ NUM_REDBEAN_ASSEMBLIES=0
 
 #SKIP_FASTP=true # Illumina reads are already trimmed
 
+#REFSEEK=$HOME/scratch/referenceseeker
+
 # ------------------------------------------------------------------------
 
 if [ -e /programs/docker/bin/docker1 ] ; then
