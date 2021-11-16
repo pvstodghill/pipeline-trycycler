@@ -41,8 +41,9 @@ fi
 PACKAGES_FROM=howto
 
 # uncomment to use conda
+#PACKAGES_FROM=conda
 #CONDA_EXE=$(type -p conda)
-#CONDA_ENV=default
+#CONDA_ENV=pipeline-trycycler
 
 # Override the default number of threads (nproc --all)
 #THREADS=32

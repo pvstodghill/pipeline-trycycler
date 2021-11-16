@@ -32,7 +32,7 @@ case X"$PACKAGES_FROM"X in
     XcondaX)
 	CONDA_PREFIX=$(dirname $(dirname $CONDA_EXE))
 	. "${CONDA_PREFIX}/etc/profile.d/conda.sh"
-	conda activate $PACKAGES_ENV
+	conda activate $CONDA_ENV
 
 	;;
     XhowtoX|XstubsX)
