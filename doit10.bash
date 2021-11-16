@@ -49,13 +49,6 @@ EOF
 
 fi
 
-# Run ReferenceSeeker
-if [ "$REFSEEK" ] ; then
-    echo '# Running ReferenceSeeker...'
-    REFSEEK="$REFSEEK" \
-	   ./scripts/run-referenceseeker data/assembly.fasta
-fi
-    
 # ------------------------------------------------------------------------
 # Done.
 # ------------------------------------------------------------------------
