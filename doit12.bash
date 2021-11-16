@@ -3,30 +3,32 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-
-if [ ! -f data/assembly.fasta ] ; then
-    echo 1>&2 'data/assembly.fasta is missing.'
-    exit 1
-fi
-
-# ------------------------------------------------------------------------
-# "Normalize" the genome.
+# Run unicycler (for a second opinion on the assembly)
 # ------------------------------------------------------------------------
 
-echo 1>&2 '# "Normalizing" the genome...'
+echo 1>&2 '# Running unicycler'
 
-rm -rf ${NORMALIZED}
-mkdir -p ${NORMALIZED}
+rm -rf ${UNICYCLER}
+mkdir ${UNICYCLER}
 
-cat data/assembly.fasta \
-    | ./scripts/dephix \
-	  > ${NORMALIZED}/unnormalized.fasta
+unicycler -t ${THREADS} \
+	  -1 ${FASTP}/trimmed_R1.fastq.gz \
+	  -2 ${FASTP}/trimmed_R2.fastq.gz \
+	  -l ${FILTLONG}/filtered_nanopore.fastq.gz \
+	  -o ${UNICYCLER}
 
-./scripts/normalize-assembly \
-    -d ${NORMALIZED}/tmp \
-    -f inputs/starts.faa \
-    ${NORMALIZED}/unnormalized.fasta ${STRAIN}_ \
-    > ${NORMALIZED}/normalized.fasta
+# ------------------------------------------------------------------------
+
+echo 1>&2 '# Running DNADiff'
+
+mkdir ${UNICYCLER}/dnadiff
+cp data/assembly.fasta ${UNICYCLER}/dnadiff/trycycler.fasta
+cp ${UNICYCLER}/assembly.fasta ${UNICYCLER}/dnadiff/unicycler.fasta
+cd ${UNICYCLER}/dnadiff
+dnadiff trycycler.fasta unicycler.fasta
+echo ''
+cat out.report
+
 
 # ------------------------------------------------------------------------
 # Done.

@@ -2,31 +2,31 @@
 
 . doit-preamble.bash
 
-. config13.bash
-
-# ------------------------------------------------------------------------
-# Run PGAP
 # ------------------------------------------------------------------------
 
-echo 1>&2 '# Running PGAP...'
+if [ ! -f data/assembly.fasta ] ; then
+    echo 1>&2 'data/assembly.fasta is missing.'
+    exit 1
+fi
 
-rm -rf ${PGAP_OUT}
+# ------------------------------------------------------------------------
+# "Normalize" the genome.
+# ------------------------------------------------------------------------
 
-TAXON_ID=$(esearch -db taxonomy -query "$GENUS $SPECIES" | efetch -format uid)
-./scripts/run-pgap \
-    -u -f \
-    -S $STRAIN \
-    -t ${TAXON_ID} \
-    -o ${PGAP_OUT} \
-    -p ${PGAP_HOME} \
-    ${NORMALIZED}/normalized.fasta -- ${PGAP_ARGS}
+echo 1>&2 '# "Normalizing" the genome...'
 
-rm -f data/assembly.fasta
+rm -rf ${NORMALIZED}
+mkdir -p ${NORMALIZED}
 
-cp ${PGAP_OUT}/annot.faa data/final.faa
-cp ${PGAP_OUT}/annot.fna data/final.fna
-cp ${PGAP_OUT}/annot.gbk data/final.gbk
-cp ${PGAP_OUT}/annot.gff data/final.gff
+cat data/assembly.fasta \
+    | ./scripts/dephix \
+	  > ${NORMALIZED}/unnormalized.fasta
+
+./scripts/normalize-assembly \
+    -d ${NORMALIZED}/tmp \
+    -f inputs/starts.faa \
+    ${NORMALIZED}/unnormalized.fasta ${STRAIN}_ \
+    > ${NORMALIZED}/normalized.fasta
 
 # ------------------------------------------------------------------------
 # Done.

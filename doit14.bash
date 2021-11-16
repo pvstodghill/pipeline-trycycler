@@ -2,24 +2,31 @@
 
 . doit-preamble.bash
 
+. config14.bash
+
 # ------------------------------------------------------------------------
-# Compute stats
+# Run PGAP
 # ------------------------------------------------------------------------
 
-echo 1>&2 '# Compute stats...'
+echo 1>&2 '# Running PGAP...'
 
-./scripts/compute-assembly-stats \
-    -t ${THREADS} \
-    -q -s -S ${STRAIN} \
-    ${INPUTS}/raw_nanopore.fastq.gz \
-    ${FILTLONG}/filtered_nanopore.fastq.gz \
-    ${INPUTS}/raw_short_R1.fastq.gz \
-    ${INPUTS}/raw_short_R2.fastq.gz \
-    ${FASTP}/trimmed_R1.fastq.gz \
-    ${FASTP}/trimmed_R2.fastq.gz \
-    data/final.fna \
-    data/final.gff
+rm -rf ${PGAP_OUT}
 
+TAXON_ID=$(esearch -db taxonomy -query "$GENUS $SPECIES" | efetch -format uid)
+./scripts/run-pgap \
+    -u -f \
+    -S $STRAIN \
+    -t ${TAXON_ID} \
+    -o ${PGAP_OUT} \
+    -p ${PGAP_HOME} \
+    ${NORMALIZED}/normalized.fasta -- ${PGAP_ARGS}
+
+rm -f data/assembly.fasta
+
+cp ${PGAP_OUT}/annot.faa data/final.faa
+cp ${PGAP_OUT}/annot.fna data/final.fna
+cp ${PGAP_OUT}/annot.gbk data/final.gbk
+cp ${PGAP_OUT}/annot.gff data/final.gff
 
 # ------------------------------------------------------------------------
 # Done.

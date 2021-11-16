@@ -83,6 +83,7 @@ RECONCILED=data/04_clusters
 MEDAKA=data/08_medaka
 FASTP=data/09_fastp 
 NEXTPOLISH=data/10_nextpolish
-UNICYCLER=data/11_unicycler
-NORMALIZED=data/12_normalized
-PGAP_OUT=data/13_pgap
+UNICYCLER=data/12_unicycler
+NORMALIZED=data/13_normalized
+PGAP_OUT=data/14_pgap
+
