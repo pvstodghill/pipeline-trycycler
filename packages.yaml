@@ -497,6 +497,14 @@ version: 1.5.1__2021-09-02
 commands:
   - raven
 
+# https://github.com/oschwengers/referenceseeker
+---
+image: pvstodghill/referenceseeker
+version: 1.7.3__2021-06-07
+commands:
+  - referenceseeker
+  - referenceseeker_db
+
 # https://github.com/samtools/samtools
 ---
 image: pvstodghill/samtools
