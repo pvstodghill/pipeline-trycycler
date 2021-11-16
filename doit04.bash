@@ -112,14 +112,21 @@ done
 
 echo 1>&2 ''
 
+OK=1
+
 for cluster_dir in ${RECONCILED}/cluster_[0-9]* ; do
     cluster_name=$(basename $cluster_dir)
     if [ -e ${cluster_dir}/2_all_seqs.fasta ] ; then
 	echo 1>&2 '#' $cluster_name OK
     else
 	echo 1>&2 '#' $cluster_name FAILED
+	OK=
     fi
 done
+
+if [ -z "$OK" ] ; then
+    exit 1
+fi
 
 # ------------------------------------------------------------------------
 # Done.
