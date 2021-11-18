@@ -18,16 +18,16 @@ FIXME: put ReferenceSeeker and PGAP ANI results here.
 This is abbreviated. It needs to be flushed out.
 
 This pipeline essentially follows the method suggested in the
-[Trycycler documentation](fixme).
+[Trycycler documentation](https://github.com/rrwick/Trycycler/wiki).
 
-Step 0. The input files are collected and stored within this directory
+Step 0. The input files were collected and stored within this directory
 tree.
 
-Step 1. FiltLong version FIXME is used to trim and filter the
+Step 1. FiltLong was used to trim and filter the
 Nanopore reads.
 
-Step 2. The reads are randomly subsampled to FIXMEx coverage (assuming
-a 5Mb geneome) and initial draft assemblies are generated as follows:
+Step 2. The reads were randomly subsampled to FIXMEx coverage (assuming
+a 5Mb geneome) and initial draft assemblies were generated as follows:
 
 - Canu: FIXME assemblies.
 - Flye: FIXME assemblies.
@@ -99,6 +99,10 @@ If used at all, the following software versions were used:
 - [PGAP](https://github.com/ncbi/pgap) FIXME
 - [Raven](https://github.com/lbcb-sci/raven/) 1.5.1
 - [Referenceseeker](https://github.com/oschwengers/referenceseeker) 1.7.3
+
+    + RefSeq DB release FIXME
+    + GTDB DB release FIXME
+
 - [Samtools](https://github.com/samtools/samtools) 1.14
 - [Seqtk](https://github.com/lh3/seqtk) 1.3
 - [Trycycler](https://github.com/rrwick/Trycycler) 0.5.1
