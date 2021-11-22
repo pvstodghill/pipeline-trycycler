@@ -8,9 +8,21 @@ tags:
 
 # Results
 
+Assemble statistics:
+
 FIXME: put doit15.out stats here.
 
-FIXME: put ReferenceSeeker and PGAP ANI results here.
+ReferenceSeeker results:
+
+~~~
+FIXME: put ReferenceSeeker results (doit11.out) here.
+~~~
+
+PGAP "taxcheck" results:
+
+~~~
+FIXME: PGAP ANI results (data/14_pgap/ani-tax-report.txt) here.
+~~~
 
 
 # Method
