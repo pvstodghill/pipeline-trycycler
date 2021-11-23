@@ -72,13 +72,14 @@ for each of the clusters.
 Step 8. Medaka was used to polish the assembly with the trimmed and
 filtered long reads.
 
-Step 9. FASTP was used to trim and filter the Illumina reads.
+Step 9. (FIXME: was this step run?) FASTP was used to trim and filter
+the Illumina reads.
 
 Step 10. NextPolish was used to polish the assembly with trimmed and
 filtered Illumin reads.
 
-Step 11. ReferenceSeeker was used to determine the most similar
-reference sequences.
+Step 11. (FIXME: was this step run?) ReferenceSeeker was used to
+determine the most similar reference sequences.
 
 Step 12. A completely independent assembly was construct using
 Unicycler from the filtered and cleaned long and Illumina reads. This
