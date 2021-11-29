@@ -6,6 +6,10 @@ projects: FIXME
 tags: 
 ...
 
+# Summary
+
+FIXME
+
 # Results
 
 Assemble statistics:
@@ -24,6 +28,12 @@ PGAP "taxcheck" results:
 FIXME: PGAP ANI results (data/14_pgap/ani-tax-report.txt) here.
 ~~~
 
+The DNADiff of the Trycycler (`[REF]`) and Unicycler (`[QRY]`)
+assemblies:
+
+~~~
+FIXME: head -n24 data/12_unicycler/dnadiff/out.report
+~~~
 
 # Method
 
