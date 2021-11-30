@@ -13,6 +13,12 @@ echo 1>&2 '# Running PGAP...'
 rm -rf ${PGAP_OUT}
 
 TAXON_ID=$(esearch -db taxonomy -query "$GENUS $SPECIES" | efetch -format uid)
+if [ -z "$TAXON_ID" ] ; then
+    echo 1>&2 ''
+    echo 1>&2 '*** TAXON_ID is empty! ***'
+    exit 1
+fi
+
 ./scripts/run-pgap \
     -u -f \
     -S $STRAIN \
@@ -20,6 +26,8 @@ TAXON_ID=$(esearch -db taxonomy -query "$GENUS $SPECIES" | efetch -format uid)
     -o ${PGAP_OUT} \
     -p ${PGAP_HOME} \
     ${NORMALIZED}/normalized.fasta -- ${PGAP_ARGS}
+
+echo 1>&2 '# Finishing up...'
 
 rm -f data/assembly.fasta
 
