@@ -5,8 +5,10 @@ STRAIN=FIXME
 
 GENOME_SIZE=5000000
 
+# ${NANOPORE_FQ_GZ} is required
 NANOPORE_FQ_GZ=../000NOTES/2020-*-FIXME-demux/output/barcodeFIXME.fastq.gz
 
+# ${Rx_FQ_GZ} are optional
 ILLUMINA_DIR=../000NOTES/2020-09-10-more-illumina-brc-downloads/
 R1_FQ_GZ=$ILLUMINA_DIR/*Pag_FIXME_*_R1.fastq.gz
 R2_FQ_GZ=$ILLUMINA_DIR/*Pag_FIXME_*_R2.fastq.gz
