@@ -18,10 +18,10 @@ mkdir -p ${INPUTS}
 
 echo 1>&2 '# Making copies of raw reads...'
 
-cp ${NANOPORE_FQ_GZ} ${INPUTS}/raw_nanopore.fastq.gz
+cat ${NANOPORE_FQ_GZ} > ${INPUTS}/raw_nanopore.fastq.gz
 if [ "${R1_FQ_GZ}" ] ; then
-    cp ${R1_FQ_GZ} ${INPUTS}/raw_short_R1.fastq.gz
-    cp ${R2_FQ_GZ} ${INPUTS}/raw_short_R2.fastq.gz
+    cat ${R1_FQ_GZ} > ${INPUTS}/raw_short_R1.fastq.gz
+    cat ${R2_FQ_GZ} > ${INPUTS}/raw_short_R2.fastq.gz
 fi
 
 # ------------------------------------------------------------------------
