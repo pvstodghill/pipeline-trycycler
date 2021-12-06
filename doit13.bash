@@ -25,7 +25,7 @@ cat data/assembly.fasta \
 ./scripts/normalize-assembly \
     -d ${NORMALIZED}/tmp \
     -f inputs/starts.faa \
-    ${NORMALIZED}/unnormalized.fasta ${STRAIN}_ \
+    ${NORMALIZED}/unnormalized.fasta ${STRAIN}${VERSION}_ \
     > ${NORMALIZED}/normalized.fasta
 
 # ------------------------------------------------------------------------

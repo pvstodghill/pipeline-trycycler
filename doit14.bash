@@ -31,7 +31,7 @@ fi
 
 ./scripts/run-pgap \
     -u -f \
-    -S $STRAIN \
+    -S $STRAIN${VERSION} \
     -t ${TAXON_ID} \
     -o ${PGAP_OUT} \
     -p ${PGAP_HOME} \

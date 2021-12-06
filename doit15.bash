@@ -10,7 +10,7 @@ echo 1>&2 '# Compute stats...'
 
 ./scripts/compute-assembly-stats \
     -t ${THREADS} \
-    -q -s -S ${STRAIN} \
+    -q -s -S ${STRAIN}${VERSION} \
     ${INPUTS}/raw_nanopore.fastq.gz \
     ${FILTLONG}/filtered_nanopore.fastq.gz \
     ${INPUTS}/raw_short_R1.fastq.gz \
