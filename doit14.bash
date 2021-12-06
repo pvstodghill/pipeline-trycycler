@@ -4,6 +4,16 @@
 
 . config14.bash
 
+if [ -z "${GENUS}" -o "${GENUS}" = FIXME ] ; then
+    echo 1>&2 config.bash: GENUS is not set.
+    exit 1
+fi
+
+if [ -z "${SPECIES}" -o "${SPECIES}" = FIXME ] ; then
+    echo 1>&2 config.bash: SPECIES is not set.
+    exit 1
+fi
+
 # ------------------------------------------------------------------------
 # Run PGAP
 # ------------------------------------------------------------------------
