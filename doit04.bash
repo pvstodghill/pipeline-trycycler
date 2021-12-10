@@ -10,8 +10,11 @@ echo 1>&2 '# Running "trycycler reconcile"...'
 
 # --- initializing ${RECONCILED} from ${CLUSTERS}
 
-if [ ! -e "${RECONCILED}" ] ; then
-    echo 1>&2 '## creating copy of clusters'
+if [ -e ${RECONCILED} ] ; then
+    echo 1>&2 "## ${RECONCILED} exists. reusing..."
+else
+    echo 1>&2 '## creating fresh copy of clusters'
+    rm -rf ${RECONCILED}
     cp --archive ${CLUSTERS} ${RECONCILED}
     rm -f ${RECONCILED}/contigs.*
 fi
