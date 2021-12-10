@@ -1,5 +1,5 @@
 ---
-title: FIXME
+title: Assembly of FIXME FIXME strain FIXME
 author: Paul Stodghill
 date: FIXME
 projects: FIXME
