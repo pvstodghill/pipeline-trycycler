@@ -1,12 +1,14 @@
 .bash_history
 .cache
 .java
-data/
-doit*.out
-doit[0-9][0-9][a-z].bash
+/.htaccess
+/.jbrowse-ignore
 /.keras/
 /.wget-hsts
 /config.bash
 /config04.bash
 /config14.bash
 HEADER.md
+data/
+doit*.out
+doit[0-9][0-9][a-z].bash
