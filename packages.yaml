@@ -28,7 +28,7 @@ java: true
 commands:
   - canu
 
-# ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/
+# https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/
 ---
 image: pvstodghill/edirect
 version: 15.7.20210909__2021-09-10
@@ -448,7 +448,7 @@ commands:
   - show-snps
   - show-tiling
 
-# ftp://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+# https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 ---
 image: pvstodghill/ncbi-blast
 version: 2.12.0plus__2021-12-06
