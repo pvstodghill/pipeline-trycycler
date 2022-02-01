@@ -106,29 +106,29 @@ Step 14. PGAP was used to annotate the final sequence.
 If used at all, the following software versions were used:
 
 - [Any2fasta](https://github.com/tseemann/any2fasta/) 0.4.2
-- [Bowtie2](https://github.com/BenLangmead/bowtie2) 2.4.4
+- [Bowtie2](https://github.com/BenLangmead/bowtie2) 2.4.5
 - [Canu](https://github.com/marbl/canu) 2.2
-- [Entrez-direct](ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/) 15.7.20210909
+- [Entrez-direct](ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/) 16.5.20220114
 - [Emboss](http://emboss.sourceforge.net) 6.6.0
-- [Fastp](https://github.com/OpenGene/fastp) 0.22.0
+- [Fastp](https://github.com/OpenGene/fastp) 0.23.2
 - [Filtlong](https://github.com/rrwick/Filtlong) 0.2.1
 - [Flye](https://github.com/fenderglass/Flye) 2.9
-- [Medaka](https://github.com/nanoporetech/medaka) 1.4.3
+- [Medaka](https://github.com/nanoporetech/medaka) 1.5.0
 - [Minipolish](https://github.com/rrwick/Minipolish) 0.1.3
 - [Mummer](http://mummer.sourceforge.net/) 3.23
-- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.10.0+
+- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.12.0+
 - [Necat](https://github.com/xiaochuanle/NECAT) 20200803
-- [Nextpolish](https://github.com/Nextomics/NextPolish) 1.3.1
+- [Nextpolish](https://github.com/Nextomics/NextPolish) 1.4.0
 - [PGAP](https://github.com/ncbi/pgap) FIXME
-- [Raven](https://github.com/lbcb-sci/raven/) 1.5.1
-- [Referenceseeker](https://github.com/oschwengers/referenceseeker) 1.7.3
+- [Raven](https://github.com/lbcb-sci/raven/) 1.7.0
+- [Referenceseeker](https://github.com/oschwengers/referenceseeker) 1.8.0
 
     + RefSeq DB release FIXME
     + GTDB DB release FIXME
 
 - [Samtools](https://github.com/samtools/samtools) 1.14
 - [Seqtk](https://github.com/lh3/seqtk) 1.3
-- [Trycycler](https://github.com/rrwick/Trycycler) 0.5.1
-- [Unicycler](https://github.com/rrwick/Unicycler) 0.4.9
+- [Trycycler](https://github.com/rrwick/Trycycler) 0.5.3
+- [Unicycler](https://github.com/rrwick/Unicycler) 0.5.0
 - [Wtdbg2 (Redbean)](https://github.com/ruanjue/wtdbg2 (redbean)) 2.5
 
