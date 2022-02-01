@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo fixme trimmed_R2.fastq.gz
+exit
+
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------

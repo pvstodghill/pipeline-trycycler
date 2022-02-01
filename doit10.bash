@@ -3,7 +3,7 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 9. https://github.com/Nextomics/NextPolish
+# Step 10. https://github.com/Nextomics/NextPolish
 # ------------------------------------------------------------------------
 
 if [ -z "${R1_FQ_GZ}" ] ; then
@@ -21,15 +21,20 @@ else
 
     cp ${MEDAKA}/polished.fasta ${NEXTPOLISH}/unpolished.fasta
     cp ${FASTP}/trimmed_R1.fastq.gz ${NEXTPOLISH}/trimmed_R1.fastq.gz
-    cp ${FASTP}/trimmed_R2.fastq.gz ${NEXTPOLISH}/trimmed_R2.fastq.gz
-
+    if [ "${R2_FQ_GZ}" ] ; then
+	cp ${FASTP}/trimmed_R2.fastq.gz ${NEXTPOLISH}/trimmed_R2.fastq.gz
+    fi
     (
 	cd ${NEXTPOLISH}
 
 	cat <<EOF > sgs.fofn
 trimmed_R1.fastq.gz
+EOF
+    if [ "${R2_FQ_GZ}" ] ; then
+	cat <<EOF >> sgs.fofn
 trimmed_R2.fastq.gz
 EOF
+    fi
 
 	cat <<EOF  > run.cfg
 task = best
@@ -37,6 +42,12 @@ genome = unpolished.fasta
 sgs_fofn = sgs.fofn
 workdir = tmp
 EOF
+
+    if [ -z "${R2_FQ_GZ}" ] ; then
+	cat <<EOF  >> run.cfg
+sgs_options = -unpaired
+EOF
+    fi
 
 	nextPolish run.cfg
 

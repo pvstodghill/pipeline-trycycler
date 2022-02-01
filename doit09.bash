@@ -3,7 +3,7 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 8. https://github.com/OpenGene/fastp
+# Step 9. https://github.com/OpenGene/fastp
 # ------------------------------------------------------------------------
 
 rm -rf ${FASTP}
@@ -17,9 +17,11 @@ elif [ "${SKIP_FASTP}" ] ; then
     echo 1>&2 '# Skipping Illumina clean-up'
     mkdir ${FASTP}
     cp --archive ${INPUTS}/raw_short_R1.fastq.gz ${FASTP}/trimmed_R1.fastq.gz
-    cp --archive ${INPUTS}/raw_short_R2.fastq.gz ${FASTP}/trimmed_R2.fastq.gz
+    if [ -e ${INPUTS}/raw_short_R2.fastq.gz ] ; then
+	cp --archive ${INPUTS}/raw_short_R2.fastq.gz ${FASTP}/trimmed_R2.fastq.gz
+    fi
 
-else
+elif [ -e ${INPUTS}/raw_short_R2.fastq.gz ] ; then
 
     echo 1>&2 '# Clean-up Illumina reads'
     mkdir ${FASTP}
@@ -35,6 +37,17 @@ else
 	--unpaired1 ${FASTP}/u.fastq.gz \
 	--unpaired2 ${FASTP}/u.fastq.gz
 
+else
+
+    echo 1>&2 '# Clean-up Illumina reads'
+    mkdir ${FASTP}
+    fastp \
+	--thread ${THREADS} \
+	--adapter_fasta inputs/NEBnext_PE.fa \
+	--json ${FASTP}/fastp.json \
+	--html ${FASTP}/fastp.html \
+	--in1 ${INPUTS}/raw_short_R1.fastq.gz \
+	--out1 ${FASTP}/trimmed_R1.fastq.gz
 fi
 
 # ------------------------------------------------------------------------
