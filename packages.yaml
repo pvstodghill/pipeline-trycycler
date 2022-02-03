@@ -407,7 +407,7 @@ commands:
   - flye
 
 # https://github.com/nanoporetech/medaka
-# https://anaconda.org/bioconda/medaka
+# https://bioconda.github.io/recipes/medaka/README.html
 ---
 image: pvstodghill/medaka
 version: 1.5.0__2022-01-31
@@ -430,7 +430,9 @@ commands:
   - minimap2 # 2.17-r941
 #  - racon    # v1.4.21
 
-# https://anaconda.org/bioconda/mummer
+
+# http://mummer.sourceforge.net/
+# https://bioconda.github.io/recipes/mummer/README.html
 ---
 image: pvstodghill/mummer
 version: 3.23__2021-10-01
@@ -506,7 +508,7 @@ commands:
   - raven
 
 # https://github.com/oschwengers/referenceseeker
-# https://anaconda.org/bioconda/referenceseeker
+# https://bioconda.github.io/recipes/referenceseeker/README.html
 ---
 image: pvstodghill/referenceseeker
 version: 1.8.0__2022-01-31
@@ -558,7 +560,7 @@ commands:
   - seqtk
 
 # https://github.com/rrwick/Trycycler
-# https://anaconda.org/bioconda/trycycler
+# https://bioconda.github.io/recipes/trycycler/README.html
 ---
 image: pvstodghill/trycycler
 version: 0.5.3__2022-01-31
@@ -566,7 +568,7 @@ commands:
   - trycycler
 
 # https://github.com/rrwick/Unicycler
-# https://anaconda.org/bioconda/unicycler
+# https://bioconda.github.io/recipes/unicycler/README.html
 ---
 image: pvstodghill/unicycler
 version: 0.5.0__2022-01-31
