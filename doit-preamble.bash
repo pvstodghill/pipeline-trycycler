@@ -11,6 +11,8 @@ export LC_ALL=C
 
 # ------------------------------------------------------------------------
 
+export HOWTO_TMPDIR=$(realpath ${DATA})/tmp
+
 if [ "$PACKAGES_FROM" = conda ] ; then
     if [ -z "$CONDA_EXE" ] ; then
 	CONDA_EXE=$(type -p conda)
