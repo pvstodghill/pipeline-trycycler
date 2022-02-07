@@ -85,6 +85,8 @@ echo 1>&2 '## editing clusters'
 
 for cluster_dir in ${RECONCILED}/cluster_[0-9]* ; do
     cluster_name=$(basename $cluster_dir)
+    cluster_num=$(echo $cluster_name | sed -e 's/cluster_//')
+    RECONCILE_ARGS_XXX=RECONCILE_ARGS_${cluster_num}
 
     if [ -e "${cluster_dir}/2_all_seqs.fasta" ] ; then
 	echo 1>&2 '## skipping  '$cluster_name'...'
@@ -99,7 +101,7 @@ for cluster_dir in ${RECONCILED}/cluster_[0-9]* ; do
 	     --threads ${THREADS} \
 	     --reads ${FILTLONG}/filtered_nanopore.fastq.gz \
 	     --cluster_dir ${cluster_dir} \
-	     ${RECONCILE_ARGS}
+	     ${RECONCILE_ARGS} ${!RECONCILE_ARGS_XXX}
 
     set -e
 
