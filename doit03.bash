@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 2. https://github.com/rrwick/Trycycler/wiki/Clustering-contigs
+# Cluster contigs from different assemblies
+# (https://github.com/rrwick/Trycycler/wiki/Clustering-contigs)
 # ------------------------------------------------------------------------
 
 echo 1>&2 '# Running "trycycler cluster"...'

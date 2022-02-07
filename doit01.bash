@@ -3,10 +3,9 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 1. https://github.com/rrwick/Trycycler/wiki/Generating-assemblies-for-Trycycler
+# Run filtlong, "Some light read QC"
+# (https://github.com/rrwick/Trycycler/wiki/Generating-assemblies-for-Trycycler)
 # ------------------------------------------------------------------------
-
-# "Some light read QC"
 
 rm -rf ${FILTLONG}
 mkdir -p ${FILTLONG}

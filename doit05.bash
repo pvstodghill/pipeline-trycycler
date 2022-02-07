@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 4. https://github.com/rrwick/Trycycler/wiki/Multiple-sequence-alignment
+# Multiple Sequence Alignment (MSDA)
+# (https://github.com/rrwick/Trycycler/wiki/Multiple-sequence-alignment)
 # ------------------------------------------------------------------------
 
 echo 1>&2 '# Performing multiple sequence alignments'

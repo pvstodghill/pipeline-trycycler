@@ -3,7 +3,10 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 1. https://github.com/rrwick/Trycycler/wiki/Generating-assemblies-for-Trycycler
+# Generate assemblies for Trycycler
+# - Make subsample sets
+# - Run individual assemblers
+# (https://github.com/rrwick/Trycycler/wiki/Generating-assemblies-for-Trycycler)
 # ------------------------------------------------------------------------
 
 . ${FILTLONG}/stats.bash

@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 6. https://github.com/rrwick/Trycycler/wiki/Generating-a-consensus
+# Generate a consensus sequence for each cluster
+# (https://github.com/rrwick/Trycycler/wiki/Generating-a-consensus)
 # ------------------------------------------------------------------------
 
 echo 1>&2 '# Generating consensus sequence'

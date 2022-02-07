@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 10. https://github.com/Nextomics/NextPolish
+# Run NextPolish to polish the consensus assembly
+# (https://github.com/Nextomics/NextPolish)
 # ------------------------------------------------------------------------
 
 if [ -z "${R1_FQ_GZ}" ] ; then

@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 3. https://github.com/rrwick/Trycycler/wiki/Reconciling-contigs
+# Reconcile the contigs in each clustern
+# (https://github.com/rrwick/Trycycler/wiki/Reconciling-contigs)
 # ------------------------------------------------------------------------
 
 echo 1>&2 '# Running "trycycler reconcile"...'

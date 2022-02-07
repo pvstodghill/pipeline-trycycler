@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 5. https://github.com/rrwick/Trycycler/wiki/Partitioning-reads
+# Parition the long reads across the clusters
+# (https://github.com/rrwick/Trycycler/wiki/Partitioning-reads)
 # ------------------------------------------------------------------------
 
 echo 1>&2 '# Partitioning reads onto clusters'

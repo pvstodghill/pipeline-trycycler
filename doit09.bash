@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 9. https://github.com/OpenGene/fastp
+# Trim and filter the short reads
+# (https://github.com/OpenGene/fastp)
 # ------------------------------------------------------------------------
 
 rm -rf ${FASTP}

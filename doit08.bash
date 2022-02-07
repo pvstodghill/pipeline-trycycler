@@ -3,7 +3,8 @@
 . doit-preamble.bash
 
 # ------------------------------------------------------------------------
-# Step 7. https://github.com/rrwick/Trycycler/wiki/Polishing-after-Trycycler
+# Run Medaka to polish the consensus assembly
+# (https://github.com/rrwick/Trycycler/wiki/Polishing-after-Trycycler)
 # ------------------------------------------------------------------------
 
 rm -rf ${MEDAKA}
