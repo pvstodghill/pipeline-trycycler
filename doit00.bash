@@ -6,10 +6,10 @@
 # Set up
 # ------------------------------------------------------------------------
 
-# if [ -d ${DATA} ] ; then
-#     echo 1>&2 "${DATA}/ already exists. cannot continue."
-#     exit 1
-# fi
+if [ -d ${DATA} ] ; then
+    echo 1>&2 "Removing ${DATA}. Hope that's what you wanted"
+    rm -rf ${DATA}
+fi
 
 echo 1>&2 "# Initializing ${DATA}/..."
 mkdir -p ${DATA}/tmp
