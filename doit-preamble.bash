@@ -1,9 +1,11 @@
 #! /bin/bash
 
-HOWTO="./scripts/howto -q -T data/tmp -f packages.yaml"
 THREADS=$(nproc --all)
 
 export LC_ALL=C
+
+PIPELINE=$(dirname ${BASH_SOURCE[0]})
+DATA=data
 
 # ------------------------------------------------------------------------
 
@@ -77,15 +79,15 @@ set -o pipefail
 
 # ------------------------------------------------------------------------
 
-INPUTS=data/00_inputs
-FILTLONG=data/01_filtlong
-ASSEMBLIES=data/02_assemblies
-CLUSTERS=data/03_clusters
-RECONCILED=data/04_reconciled
-MEDAKA=data/08_medaka
-FASTP=data/09_fastp 
-NEXTPOLISH=data/10_nextpolish
-UNICYCLER=data/12_unicycler
-NORMALIZED=data/13_normalized
-PGAP_OUT=data/14_pgap
+INPUTS=${DATA}/00_inputs
+FILTLONG=${DATA}/01_filtlong
+ASSEMBLIES=${DATA}/02_assemblies
+CLUSTERS=${DATA}/03_clusters
+RECONCILED=${DATA}/04_reconciled
+MEDAKA=${DATA}/08_medaka
+FASTP=${DATA}/09_fastp 
+NEXTPOLISH=${DATA}/10_nextpolish
+UNICYCLER=${DATA}/12_unicycler
+NORMALIZED=${DATA}/13_normalized
+PGAP_OUT=${DATA}/14_pgap
 

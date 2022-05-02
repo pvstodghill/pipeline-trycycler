@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 # ------------------------------------------------------------------------
 # Run NextPolish to polish the consensus assembly
@@ -11,7 +11,7 @@ if [ -z "${R1_FQ_GZ}" ] ; then
 
     echo 1>&2 '# No Illumina reads to for polishing'
 
-    cp ${MEDAKA}/polished.fasta data/assembly.fasta
+    cp ${MEDAKA}/polished.fasta ${DATA}/assembly.fasta
 
 else
 
@@ -57,7 +57,7 @@ EOF
 
     )
 
-    cp ${NEXTPOLISH}/polished.fasta data/assembly.fasta
+    cp ${NEXTPOLISH}/polished.fasta ${DATA}/assembly.fasta
 
 fi
 

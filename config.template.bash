@@ -1,3 +1,7 @@
+# directory into which the results are written.
+#DATA=.
+#DATA=data # default
+
 GRAM=neg
 GENUS=FIXME
 SPECIES=FIXME

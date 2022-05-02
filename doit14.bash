@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 . config14.bash
 
@@ -29,7 +29,7 @@ if [ -z "$TAXON_ID" ] ; then
     exit 1
 fi
 
-./scripts/run-pgap \
+${PIPELINE}/scripts/run-pgap \
     -u -f \
     -S $STRAIN${VERSION} \
     -t ${TAXON_ID} \
@@ -39,12 +39,12 @@ fi
 
 echo 1>&2 '# Finishing up...'
 
-rm -f data/assembly.fasta
+rm -f ${DATA}/assembly.fasta
 
-cp ${PGAP_OUT}/annot.faa data/final.faa
-cp ${PGAP_OUT}/annot.fna data/final.fna
-cp ${PGAP_OUT}/annot.gbk data/final.gbk
-cp ${PGAP_OUT}/annot.gff data/final.gff
+cp ${PGAP_OUT}/annot.faa ${DATA}/final.faa
+cp ${PGAP_OUT}/annot.fna ${DATA}/final.fna
+cp ${PGAP_OUT}/annot.gbk ${DATA}/final.gbk
+cp ${PGAP_OUT}/annot.gff ${DATA}/final.gff
 
 # ------------------------------------------------------------------------
 # Done.

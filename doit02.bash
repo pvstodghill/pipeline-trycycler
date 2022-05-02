@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 # ------------------------------------------------------------------------
 # Generate assemblies for Trycycler
@@ -163,7 +163,7 @@ for j in $(seq 0 $[ $NUM_NECAT_ASSEMBLIES - 1 ]) ; do
     make_subsample necat $j
     
     echo "## running necat"
-    ./scripts/run-necat -H \
+    ${PIPELINE}/scripts/run-necat -H \
 			-g "$GENOME_SIZE" -t "$THREADS" \
 			-w ${ASSEMBLIES}/tmp/necat_${j} \
 			-o ${ASSEMBLIES}/necat_${j}.fna \

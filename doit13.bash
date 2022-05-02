@@ -1,11 +1,11 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 # ------------------------------------------------------------------------
 
-if [ ! -f data/assembly.fasta ] ; then
-    echo 1>&2 'data/assembly.fasta is missing.'
+if [ ! -f ${DATA}/assembly.fasta ] ; then
+    echo 1>&2 '${DATA}/assembly.fasta is missing.'
     exit 1
 fi
 
@@ -18,11 +18,11 @@ echo 1>&2 '# "Normalizing" the genome...'
 rm -rf ${NORMALIZED}
 mkdir -p ${NORMALIZED}
 
-cat data/assembly.fasta \
-    | ./scripts/dephix \
+cat ${DATA}/assembly.fasta \
+    | ${PIPELINE}/scripts/dephix \
 	  > ${NORMALIZED}/unnormalized.fasta
 
-./scripts/normalize-assembly \
+${PIPELINE}/scripts/normalize-assembly \
     -d ${NORMALIZED}/tmp \
     -f inputs/starts.faa \
     ${NORMALIZED}/unnormalized.fasta ${STRAIN}${VERSION}_ \

@@ -25,14 +25,14 @@ FIXME: put ReferenceSeeker results (doit11.out) here.
 PGAP "taxcheck" results:
 
 ~~~
-FIXME: PGAP ANI results (data/14_pgap/ani-tax-report.txt) here.
+FIXME: PGAP ANI results (${DATA}/14_pgap/ani-tax-report.txt) here.
 ~~~
 
 The DNADiff of the Trycycler (`[REF]`) and Unicycler (`[QRY]`)
 assemblies:
 
 ~~~
-FIXME: head -n24 data/12_unicycler/dnadiff/out.report
+FIXME: head -n24 ${DATA}/12_unicycler/dnadiff/out.report
 ~~~
 
 # Method

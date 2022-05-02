@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 # ------------------------------------------------------------------------
 # Run unicycler (for a second opinion on the assembly)
@@ -22,7 +22,7 @@ unicycler -t ${THREADS} \
 echo 1>&2 '# Running DNADiff'
 
 mkdir ${UNICYCLER}/dnadiff
-cp data/assembly.fasta ${UNICYCLER}/dnadiff/trycycler.fasta
+cp ${DATA}/assembly.fasta ${UNICYCLER}/dnadiff/trycycler.fasta
 cp ${UNICYCLER}/assembly.fasta ${UNICYCLER}/dnadiff/unicycler.fasta
 cd ${UNICYCLER}/dnadiff
 dnadiff trycycler.fasta unicycler.fasta

@@ -1,6 +1,6 @@
 #! /bin/bash
 
-. doit-preamble.bash
+. $(dirname ${BASH_SOURCE[0]})/doit-preamble.bash
 
 # ------------------------------------------------------------------------
 # Compute stats
@@ -12,7 +12,7 @@ ARGS="-q -s"
 
 if [ "$R2_FQ_GZ" ] ; then
 
-    ./scripts/compute-assembly-stats \
+    ${PIPELINE}/scripts/compute-assembly-stats \
 	-t ${THREADS} \
 	${ARGS} -S ${STRAIN}${VERSION} \
 	${INPUTS}/raw_nanopore.fastq.gz \
@@ -21,12 +21,12 @@ if [ "$R2_FQ_GZ" ] ; then
 	${INPUTS}/raw_short_R2.fastq.gz \
 	${FASTP}/trimmed_R1.fastq.gz \
 	${FASTP}/trimmed_R2.fastq.gz \
-	data/final.fna \
-	data/final.gff
+	${DATA}/final.fna \
+	${DATA}/final.gff
 
 else
 
-    ./scripts/compute-assembly-stats \
+    ${PIPELINE}/scripts/compute-assembly-stats \
 	-t ${THREADS} \
 	${ARGS} -S ${STRAIN}${VERSION} \
 	${INPUTS}/raw_nanopore.fastq.gz \
@@ -35,8 +35,8 @@ else
 	"" \
 	${FASTP}/trimmed_R1.fastq.gz \
 	"" \
-	data/final.fna \
-	data/final.gff
+	${DATA}/final.fna \
+	${DATA}/final.gff
 
 fi
 
