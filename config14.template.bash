@@ -1,5 +1,9 @@
 #! /bin/bash
 
+GRAM=neg
+GENUS=FIXME
+SPECIES=FIXME
+
 PGAP_HOME=$HOME/scratch/pgap
 
 PGAP_ARGS=

@@ -2,9 +2,6 @@
 #DATA=.
 #DATA=data # default
 
-GRAM=neg
-GENUS=FIXME
-SPECIES=FIXME
 STRAIN=FIXME
 VERSION=
 
