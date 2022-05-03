@@ -410,7 +410,7 @@ commands:
 # https://bioconda.github.io/recipes/medaka/README.html
 ---
 image: pvstodghill/medaka
-version: 1.5.0__2022-01-31
+version: 1.6.0__2022-05-02
 commands:
   - medaka
   - medaka_consensus
@@ -459,7 +459,7 @@ commands:
 # https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
 ---
 image: pvstodghill/ncbi-blast
-version: 2.12.0plus__2021-12-06
+version: 2.13.0plus__2022-05-02
 commands:
   - blast_formatter
   - blastdb_aliastool
@@ -503,7 +503,7 @@ commands:
 # https://github.com/lbcb-sci/raven/
 ---
 image: pvstodghill/raven
-version: 1.7.0__2021-12-06
+version: 1.8.1__2022-05-02
 commands:
   - raven
 
@@ -519,7 +519,7 @@ commands:
 # https://github.com/samtools/samtools
 ---
 image: pvstodghill/samtools
-version: 1.14__2021-10-29
+version: 1.15.1__2022-05-02
 commands:
   - ace2sam
   - bcftools
