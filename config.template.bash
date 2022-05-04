@@ -38,10 +38,6 @@ NUM_REDBEAN_ASSEMBLIES=0
 
 # ------------------------------------------------------------------------
 
-if [ -e /programs/docker/bin/docker1 ] ; then
-    export HOWTO_DOCKER_CMD=/programs/docker/bin/docker1
-fi
-
 # Uncomment to get packages from HOWTO
 PACKAGES_FROM=howto
 
@@ -50,5 +46,12 @@ PACKAGES_FROM=howto
 #CONDA_EXE=$(type -p conda)
 #CONDA_ENV=pipeline-trycycler
 
-# Override the default number of threads (nproc --all)
-#THREADS=32
+# ------------------------------------------------------------------------
+
+# BioHPC-specific settings
+
+if [ -e /programs/docker/bin/docker1 ] ; then
+    export HOWTO_DOCKER_CMD=/programs/docker/bin/docker1
+    THREADS=32
+fi
+
