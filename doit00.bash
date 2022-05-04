@@ -12,6 +12,7 @@
 # fi
 
 echo 1>&2 "# Initializing ${DATA}/..."
+rm -rf ${DATA}/tmp ${INPUTS}
 mkdir -p ${DATA}/tmp
 mkdir -p ${INPUTS}
 
