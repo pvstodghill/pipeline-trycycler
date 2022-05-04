@@ -13,7 +13,9 @@
 
 mkdir -p ${ASSEMBLIES}/tmp ${ASSEMBLIES}/inputs
 
-SEED_BASE=0
+if [ -z "$SEED_BASE" ] ; then
+    SEED_BASE=0
+fi
 SEED_BASE_SKIP=20
 
 function make_subsample {
