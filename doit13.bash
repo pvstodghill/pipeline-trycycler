@@ -24,7 +24,7 @@ cat ${DATA}/assembly.fasta \
 
 ${PIPELINE}/scripts/normalize-assembly \
     -d ${NORMALIZED}/tmp \
-    -f inputs/starts.faa \
+    -f ${PIPELINE}/inputs/starts.faa \
     ${NORMALIZED}/unnormalized.fasta ${STRAIN}${VERSION}_ \
     > ${NORMALIZED}/normalized.fasta
 
