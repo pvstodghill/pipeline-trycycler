@@ -32,6 +32,8 @@ NUM_REDBEAN_ASSEMBLIES=0
 #RECONCILE_ARGS="--max_indel_size 1000" # default
 #MAKE_DOTPLOTS=true # make dotplots for clusters that fail to reconcile
 
+FASTP_ADAPTER_ARGS= # Use auto-detection method
+#FASTP_ADAPTER_ARGS=--adapter_fasta inputs/NEBnext_PE.fa
 #SKIP_FASTP=true # Illumina reads are already trimmed
 
 #REFSEEK=$HOME/scratch/referenceseeker

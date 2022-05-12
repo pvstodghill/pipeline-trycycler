@@ -28,7 +28,7 @@ elif [ -e ${INPUTS}/raw_short_R2.fastq.gz ] ; then
     mkdir ${FASTP}
     fastp \
 	--thread ${THREADS} \
-	--adapter_fasta inputs/NEBnext_PE.fa \
+	${FASTP_ADAPTER_ARGS} \
 	--json ${FASTP}/fastp.json \
 	--html ${FASTP}/fastp.html \
 	--in1 ${INPUTS}/raw_short_R1.fastq.gz \
@@ -44,7 +44,7 @@ else
     mkdir ${FASTP}
     fastp \
 	--thread ${THREADS} \
-	--adapter_fasta inputs/NEBnext_PE.fa \
+	${FASTP_ADAPTER_ARGS} \
 	--json ${FASTP}/fastp.json \
 	--html ${FASTP}/fastp.html \
 	--in1 ${INPUTS}/raw_short_R1.fastq.gz \
