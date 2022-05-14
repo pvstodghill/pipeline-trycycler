@@ -144,7 +144,7 @@ for j in $(seq 0 $[ $NUM_RAVEN_ASSEMBLIES - 1 ]) ; do
     
     echo "## running raven"
     raven --threads "$THREADS" ${ASSEMBLIES}/inputs/raven_${j}.fastq.gz \
-	  --graphical-fragment-assembly ${ASSEMBLIES}/raven_${j}.gfa
+	  --graphical-fragment-assembly ${ASSEMBLIES}/raven_${j}.gfa \
 	  > ${ASSEMBLIES}/raven_${j}.fna
     rm raven.cereal
 
