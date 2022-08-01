@@ -113,20 +113,20 @@ If used at all, the following software versions were used:
 - [Fastp](https://github.com/OpenGene/fastp) 0.23.2
 - [Filtlong](https://github.com/rrwick/Filtlong) 0.2.1
 - [Flye](https://github.com/fenderglass/Flye) 2.9
-- [Medaka](https://github.com/nanoporetech/medaka) 1.5.0
+- [Medaka](https://github.com/nanoporetech/medaka) 1.6.1
 - [Minipolish](https://github.com/rrwick/Minipolish) 0.1.3
 - [Mummer](http://mummer.sourceforge.net/) 3.23
-- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.12.0+
+- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.13.0+
 - [Necat](https://github.com/xiaochuanle/NECAT) 20200803
-- [Nextpolish](https://github.com/Nextomics/NextPolish) 1.4.0
+- [Nextpolish](https://github.com/Nextomics/NextPolish) 1.4.1
 - [PGAP](https://github.com/ncbi/pgap) FIXME
-- [Raven](https://github.com/lbcb-sci/raven/) 1.7.0
+- [Raven](https://github.com/lbcb-sci/raven/) 1.8.1
 - [Referenceseeker](https://github.com/oschwengers/referenceseeker) 1.8.0
 
     + RefSeq DB release FIXME
     + GTDB DB release FIXME
 
-- [Samtools](https://github.com/samtools/samtools) 1.14
+- [Samtools](https://github.com/samtools/samtools) 1.15.1
 - [Seqtk](https://github.com/lh3/seqtk) 1.3
 - [Trycycler](https://github.com/rrwick/Trycycler) 0.5.3
 - [Unicycler](https://github.com/rrwick/Unicycler) 0.5.0
