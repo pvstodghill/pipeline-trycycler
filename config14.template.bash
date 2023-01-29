@@ -4,6 +4,9 @@ GRAM=neg
 GENUS=FIXME
 SPECIES=FIXME
 
+BUSCO_LINEAGE= # use --auto-lineage-prok
+#BUSCO_LINEAGE=FIXME # consult busco --list-datasets
+
 PGAP_HOME=$HOME/scratch/pgap
 
 PGAP_ARGS=

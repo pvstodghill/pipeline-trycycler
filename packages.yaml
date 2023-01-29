@@ -20,6 +20,15 @@ commands:
   - bowtie2-inspect-l
   - bowtie2-inspect-s
 
+# https://busco.ezlab.org/
+# https://bioconda.github.io/recipes/busco/README.html
+---
+image: pvstodghill/busco
+version: 5.4.4__2023-01-08
+commands:
+  - busco
+  - generate_plot.py
+
 # https://github.com/marbl/canu
 ---
 image: pvstodghill/canu
