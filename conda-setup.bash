@@ -1,7 +1,7 @@
 #! /bin/bash
 
 echo 1>&2 this currently fails. conflict with medaka.
-exit 1b
+exit 1
 
 
 set -e
