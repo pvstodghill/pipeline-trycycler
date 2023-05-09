@@ -5,10 +5,41 @@ version: 0.4.2__2020-11-02
 commands:
   - any2fasta
   
+# https://bioconda.github.io/recipes/blast/README.html
+# https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
+---
+image: pvstodghill/blast
+version: 2.14.0__2023-05-08
+commands:
+  - blast_formatter
+  - blastdb_aliastool
+  - blastdbcheck
+  - blastdbcmd
+  - blastn
+  - blastp
+  - blastx
+  - cleanup-blastdb-volumes.py
+  - convert2blastmask
+  - deltablast
+  - dustmasker
+  - get_species_taxids.sh
+  - legacy_blast.pl
+  - makeblastdb
+  - makembindex
+  - makeprofiledb
+  - psiblast
+  - rpsblast
+  - rpstblastn
+  - segmasker
+  - tblastn
+  - tblastx
+  - update_blastdb.pl
+  - windowmasker
+
 # https://github.com/BenLangmead/bowtie2
 ---
 image: pvstodghill/bowtie2
-version: 2.4.5__2022-01-31
+version: 2.5.1__2023-05-08
 commands:
   - bowtie2
   - bowtie2-align-l
@@ -24,7 +55,7 @@ commands:
 # https://bioconda.github.io/recipes/busco/README.html
 ---
 image: pvstodghill/busco
-version: 5.4.4__2023-01-08
+version: 5.4.7__2023-05-08
 commands:
   - busco
   - generate_plot.py
@@ -37,27 +68,10 @@ java: true
 commands:
   - canu
 
-# https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/
 ---
-image: pvstodghill/edirect
-version: 16.5.20220114__2022-01-31
+image: pvstodghill/entrez-direct
+version: 16.2__2023-05-09
 commands:
-  - accn-at-a-time
-  - align-columns
-  - amino-acid-composition
-  - archive-pubmed
-  - asn2xml
-  - between-two-genes
-  - blst2tkns
-  - csv2xml
-  - custom-index
-  - disambiguate-nucleotides
-  - download-ncbi-data
-  - download-ncbi-software
-  - download-pubmed
-  - download-sequence
-  - ecommon.sh
-  - edirect.py
   - efetch
   - efilter
   - einfo
@@ -66,66 +80,6 @@ commands:
   - esample
   - esearch
   - esummary
-  - exclude-uid-lists
-  - expand-current
-  - fetch-pubmed
-  - filter-columns
-  - filter-stop-words
-  - find-in-gene
-  - fuse-ranges
-  - fuse-segments
-  - gbf2xml
-  - gene2range
-  - hgvs2spdi
-  - idx-authors
-  - idx-metadata
-  - idx-words
-  - index-extras
-  - index-pubmed
-  - intersect-uid-lists
-  - join-into-groups-of
-  - json2xml
-  - nquire
-  - phrase-search
-  - pm-collect
-  - pm-index
-  - pm-invert
-  - pm-merge
-  - pm-prepare
-  - pm-promote
-  - pm-refresh
-  - pm-stash
-  - pma2pme
-  - print-columns
-  - rchive
-  - rchive.Linux
-  - reorder-columns
-  - run-ncbi-converter
-  - skip-if-file-exists
-  - snp2hgvs
-  - snp2tbl
-  - sort-table
-  - sort-uniq-count
-  - sort-uniq-count-rank
-  - spdi2tbl
-  - split-at-intron
-  - stream-pubmed
-  - tbl2prod
-  - tbl2xml
-  - test-edirect
-  - test-eutils
-  - test-pubmed-index
-  - theme-aliases
-  - transmute
-  - transmute.Linux
-  - uniq-table
-  - word-at-a-time
-  - xml2fsa
-  - xml2json
-  - xml2tbl
-  - xtract
-  - xtract.Linux
-  - xy-plot
 
 # https://tracker.debian.org/pkg/emboss
 ---
@@ -408,10 +362,11 @@ version: 0.2.1__2021-09-01
 commands:
   - filtlong
   
+# https://bioconda.github.io/recipes/flye/README.html
 # https://github.com/fenderglass/Flye
 ---
 image: pvstodghill/flye
-version: 2.9.1__2022-08-08
+version: 2.9.2__2023-05-09
 commands:
   - flye
 
@@ -429,16 +384,29 @@ commands:
   - medaka_variant
   - medaka_version_report
 
+# https://bioconda.github.io/recipes/miniasm/README.html
+# https://github.com/lh3/miniasm
+---
+image: pvstodghill/miniasm
+version: 0.3__2023-05-09
+commands:
+  - miniasm
+  - minidot
+  
+# https://bioconda.github.io/recipes/minimap2/README.html
+# https://github.com/lh3/minimap2
+---
+image: pvstodghill/minimap2
+version: 2.26__2023-05-09
+commands:
+  - minimap2
+
 # https://github.com/rrwick/Minipolish
 ---
 image: pvstodghill/minipolish
-version: 0.1.3__2021-09-02
+version: 0.1.3__2023-05-09
 commands:
   - minipolish
-  - miniasm  # 0.3-r179
-  - minimap2 # 2.17-r941
-#  - racon    # v1.4.21
-
 
 # http://mummer.sourceforge.net/
 # https://bioconda.github.io/recipes/mummer/README.html
@@ -464,37 +432,6 @@ commands:
   - show-diff
   - show-snps
   - show-tiling
-
-# https://bioconda.github.io/recipes/blast/README.html
-# https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/
----
-image: pvstodghill/ncbi-blast
-version: 2.13.0plus__2022-05-02
-commands:
-  - blast_formatter
-  - blastdb_aliastool
-  - blastdbcheck
-  - blastdbcmd
-  - blastn
-  - blastp
-  - blastx
-  - cleanup-blastdb-volumes.py
-  - convert2blastmask
-  - deltablast
-  - dustmasker
-  - get_species_taxids.sh
-  - legacy_blast.pl
-  - makeblastdb
-  - makembindex
-  - makeprofiledb
-  - psiblast
-  - rpsblast
-  - rpstblastn
-  - segmasker
-  - tblastn
-  - tblastx
-  - update_blastdb.pl
-  - windowmasker
 
 # https://github.com/xiaochuanle/NECAT
 ---
@@ -530,7 +467,7 @@ commands:
 # https://bioconda.github.io/recipes/samtools/README.html
 ---
 image: pvstodghill/samtools
-version: 1.16.1__2023-01-24
+version: 1.17__2023-05-09
 commands:
   - ace2sam
   - bcftools
@@ -574,7 +511,7 @@ commands:
 # https://bioconda.github.io/recipes/trycycler/README.html
 ---
 image: pvstodghill/trycycler
-version: 0.5.3__2022-01-31
+version: 0.5.4__2023-05-09
 commands:
   - trycycler
 
