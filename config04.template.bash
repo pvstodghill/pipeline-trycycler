@@ -5,6 +5,6 @@
 
 # remove_contigs F_IXME
 # remove_assemblies F I X M E
-# remove_clusters 1 002 ...
+# remove_clusters 1 002 cluster_003 ...
 
 # RECONCILE_ARGS_004="--min_identity 97.0"
