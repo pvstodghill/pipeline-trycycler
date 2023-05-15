@@ -24,7 +24,9 @@ fi
 
 function remove_clusters {
     for index in "$@" ; do
-	if [ -e ${RECONCILED}/cluster_00${index} ] ; then
+	if [ -e ${RECONCILED}/${index} ] ; then
+	    path=${RECONCILED}/${index}
+	elif [ -e ${RECONCILED}/cluster_00${index} ] ; then
 	    path=${RECONCILED}/cluster_00${index}
 	elif [ -e ${RECONCILED}/cluster_0${index} ] ; then
 	    path=${RECONCILED}/cluster_0${index}
