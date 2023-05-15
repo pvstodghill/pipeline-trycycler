@@ -14,7 +14,7 @@ FIXME
 
 Assemble statistics:
 
-FIXME: put doit15.out stats here.
+FIXME: put doit16.out stats here.
 
 ReferenceSeeker results:
 
@@ -103,32 +103,34 @@ position 1 on the positive strand.
 
 Step 14. PGAP was used to annotate the final sequence.
 
+Step 15. BUSCO was used to evaluate the final sequence and annotation.
+
 If used at all, the following software versions were used:
 
 - [Any2fasta](https://github.com/tseemann/any2fasta/) 0.4.2
-- [Bowtie2](https://github.com/BenLangmead/bowtie2) 2.4.5
+- [Bowtie2](https://github.com/BenLangmead/bowtie2) 2.5.1
+- [BUSCO](https://busco.ezlab.org/) 5.4.7
 - [Canu](https://github.com/marbl/canu) 2.2
-- [Entrez-direct](ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/) 16.5.20220114
+- [Entrez-direct](ftp://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/) 16.2
 - [Emboss](http://emboss.sourceforge.net) 6.6.0
 - [Fastp](https://github.com/OpenGene/fastp) 0.23.2
 - [Filtlong](https://github.com/rrwick/Filtlong) 0.2.1
-- [Flye](https://github.com/fenderglass/Flye) 2.9
-- [Medaka](https://github.com/nanoporetech/medaka) 1.6.1
+- [Flye](https://github.com/fenderglass/Flye) 2.9.2
+- [Medaka](https://github.com/nanoporetech/medaka) 1.7.2
 - [Minipolish](https://github.com/rrwick/Minipolish) 0.1.3
 - [Mummer](http://mummer.sourceforge.net/) 3.23
-- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.13.0+
+- [Ncbi-blast](https://blast.ncbi.nlm.nih.gov/) 2.14.0+
 - [Necat](https://github.com/xiaochuanle/NECAT) 20200803
 - [Nextpolish](https://github.com/Nextomics/NextPolish) 1.4.1
-- [PGAP](https://github.com/ncbi/pgap) FIXME
+- [PGAP](https://github.com/ncbi/pgap) 2022-12-13.build6494
 - [Raven](https://github.com/lbcb-sci/raven/) 1.8.1
 - [Referenceseeker](https://github.com/oschwengers/referenceseeker) 1.8.0
 
     + RefSeq DB release FIXME
     + GTDB DB release FIXME
 
-- [Samtools](https://github.com/samtools/samtools) 1.15.1
+- [Samtools](https://github.com/samtools/samtools) 1.17
 - [Seqtk](https://github.com/lh3/seqtk) 1.3
-- [Trycycler](https://github.com/rrwick/Trycycler) 0.5.3
+- [Trycycler](https://github.com/rrwick/Trycycler) 0.5.4
 - [Unicycler](https://github.com/rrwick/Unicycler) 0.5.0
 - [Wtdbg2 (Redbean)](https://github.com/ruanjue/wtdbg2 (redbean)) 2.5
-
