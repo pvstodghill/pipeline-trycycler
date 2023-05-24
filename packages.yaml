@@ -68,6 +68,8 @@ java: true
 commands:
   - canu
 
+# https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/versions/
+# https://bioconda.github.io/recipes/entrez-direct/README.html
 ---
 image: pvstodghill/entrez-direct
 version: 16.2__2023-05-09
@@ -81,7 +83,9 @@ commands:
   - esearch
   - esummary
 
+# https://bioconda.github.io/recipes/emboss/README.html
 # https://tracker.debian.org/pkg/emboss
+# http://emboss.sourceforge.net
 ---
 image: pvstodghill/emboss
 version: 6.6.0__2019-07-05
@@ -349,9 +353,10 @@ commands:
   - yank
 
 # https://github.com/OpenGene/fastp
+# https://bioconda.github.io/recipes/fastp/README.html
 ---
 image: pvstodghill/fastp
-version: 0.23.2__2021-12-06
+version: 0.23.3__2023-05-24
 commands:
   - fastp
   
@@ -374,7 +379,7 @@ commands:
 # https://bioconda.github.io/recipes/medaka/README.html
 ---
 image: pvstodghill/medaka
-version: 1.7.2__2023-01-24
+version: 1.8.0__2023-05-24
 commands:
   - medaka
   - medaka_consensus
@@ -500,10 +505,11 @@ commands:
   - wgsim_eval.pl
   - zoom2sam.pl
 
+# https://bioconda.github.io/recipes/seqtk/README.html
 # https://github.com/lh3/seqtk
 ---
 image: pvstodghill/seqtk
-version: 1.3__2020-11-18
+version: 1.4__2023-05-24
 commands:
   - seqtk
 
