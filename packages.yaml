@@ -37,6 +37,7 @@ commands:
   - windowmasker
 
 # https://github.com/BenLangmead/bowtie2
+# https://bioconda.github.io/recipes/bowtie2/README.html
 ---
 image: pvstodghill/bowtie2
 version: 2.5.1__2023-05-08
@@ -359,7 +360,7 @@ image: pvstodghill/fastp
 version: 0.23.3__2023-05-24
 commands:
   - fastp
-  
+
 # https://github.com/rrwick/Filtlong
 ---
 image: pvstodghill/filtlong
