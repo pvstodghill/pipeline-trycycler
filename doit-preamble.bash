@@ -104,3 +104,4 @@ UNICYCLER=${DATA}/12_unicycler
 NORMALIZED=${DATA}/13_normalized
 PGAP_OUT=${DATA}/14_pgap
 BUSCO_OUT=${DATA}/15_busco
+STATS=${DATA}/16_stats

@@ -6,6 +6,9 @@
 # Compute stats
 # ------------------------------------------------------------------------
 
+rm -rf ${STATS}
+mkdir -p ${STATS}
+
 echo 1>&2 '# Compute stats...'
 
 ARGS="-q -s"
