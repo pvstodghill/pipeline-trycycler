@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo 1>&2 this currently fails. python conflicts b/w busco, nextpolish
+exit 1
+
 set -e
 
 NAME=pipeline-trycycler
