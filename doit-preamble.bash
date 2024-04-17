@@ -1,5 +1,12 @@
 #! /bin/bash
 
+set -e
+set -o pipefail
+
+export LC_ALL=C
+
+# ------------------------------------------------------------------------
+
 # In order to help test portability, I eliminate all of my
 # personalizations from the PATH, etc.
 if [ "$PVSE" ] ; then
@@ -82,13 +89,6 @@ function run_commands_from_stdin {
 	bash -x
     fi
 }
-
-# ------------------------------------------------------------------------
-
-set -e
-set -o pipefail
-
-export LC_ALL=C
 
 # ------------------------------------------------------------------------
 
