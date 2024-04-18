@@ -30,7 +30,7 @@ if [ -z "$TAXON_ID" ] ; then
 fi
 
 ${PIPELINE}/scripts/run-pgap \
-    -u -f \
+	   -u \
     -S $STRAIN${VERSION} \
     -t ${TAXON_ID} \
     -o ${PGAP_OUT} \
