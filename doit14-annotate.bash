@@ -28,14 +28,15 @@ if [ -z "$TAXON_ID" ] ; then
     echo 1>&2 '*** TAXON_ID is empty! ***'
     exit 1
 fi
+#    -t ${TAXON_ID} \
 
 ${PIPELINE}/scripts/run-pgap \
 	   -u \
-    -S $STRAIN${VERSION} \
-    -t ${TAXON_ID} \
-    -o ${PGAP_OUT} \
-    -p ${PGAP_HOME} \
-    ${NORMALIZED}/normalized.fasta -- ${PGAP_ARGS}
+	   -O "$GENUS $SPECIES" \
+	   -S $STRAIN${VERSION} \
+	   -o ${PGAP_OUT} \
+	   -p ${PGAP_HOME} \
+	   ${NORMALIZED}/normalized.fasta -- ${PGAP_ARGS}
 
 echo 1>&2 '# Finishing up...'
 
