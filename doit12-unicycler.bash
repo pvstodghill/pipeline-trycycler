@@ -23,15 +23,17 @@ else
 	      -l ${FILTLONG}/filtered_nanopore.fastq.gz \
 	      -o ${UNICYCLER}
 
-    echo 1>&2 '# Running DNADiff'
+    if [ -e ${DATA}/assembly.fasta ] ; then
+	echo 1>&2 '# Running DNADiff against Trycycler assembly'
 
-    mkdir ${UNICYCLER}/dnadiff
-    cp ${DATA}/assembly.fasta ${UNICYCLER}/dnadiff/trycycler.fasta
-    cp ${UNICYCLER}/assembly.fasta ${UNICYCLER}/dnadiff/unicycler.fasta
-    cd ${UNICYCLER}/dnadiff
-    dnadiff trycycler.fasta unicycler.fasta
-    echo ''
-    cat out.report
+	mkdir ${UNICYCLER}/dnadiff
+	cp ${DATA}/assembly.fasta ${UNICYCLER}/dnadiff/trycycler.fasta
+	cp ${UNICYCLER}/assembly.fasta ${UNICYCLER}/dnadiff/unicycler.fasta
+	cd ${UNICYCLER}/dnadiff
+	dnadiff trycycler.fasta unicycler.fasta
+	echo ''
+	cat out.report
+    fi
 
 fi
 
