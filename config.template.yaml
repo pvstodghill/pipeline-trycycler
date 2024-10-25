@@ -1,0 +1,12 @@
+########################################################################
+# Basic parameters
+########################################################################
+
+# # Where to put output files
+# data: data
+
+nanopore: ~/midden/2024/05-07-plasmidsaurus-jea33-pag-nanopore/Asselin_H4S_results/Asselin_H4S_3/reads/raw_reads.fastq.gz
+short_R1: ~/midden/2024/05-16-plasmidsaurus-jea33-pag-illumina/Asselin_H4S_polished_results/Asselin_H4S_3_polish/Asselin_H4S_3_S70_R1_001.fastq.gz
+short_R2: ~/midden/2024/05-16-plasmidsaurus-jea33-pag-illumina/Asselin_H4S_polished_results/Asselin_H4S_3_polish/Asselin_H4S_3_S70_R2_001.fastq.gz
+
+  
