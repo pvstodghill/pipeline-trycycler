@@ -3,43 +3,61 @@
 Pipeline for assembling prokaryotic genomes using
 [Trycycler](https://github.com/rrwick/Trycycler).
 
-Setting a [Conda](https://conda.io) environment for the pipeline,
+## Cloning the repo
+
+This pipeline using Git submodules. The easiest way to clone this repo (with a recent version of `git`) is
 
 ```
-# conda env remove -y --name pipeline-trycycler
-conda create -y --name pipeline-trycycler
-conda activate pipeline-trycycler
-
-conda config --add channels bioconda
-conda config --add channels conda-forge
-
-# required
-conda install -y "samtools>=1.10"
-conda install -y any2fasta
-conda install -y blast
-conda install -y emboss
-conda install -y entrez-direct
-conda install -y fastp=0.22.0 # <-- for me 0.23.x hangs
-conda install -y filtlong
-conda install -y medaka
-conda install -y seqtk
-conda install -y trycycler
-
-# very strongly encouraged
-conda install -y flye
-conda install -y minipolish miniasm
-conda install -y raven-assembler
-
-# encouraged
-conda install -y unicycler mummer
-conda install -y referenceseeker
-
-# optional
-conda install -y canu
-conda install -y wtdbg
-conda install -y necat
-
+git clone --recurse-submodules https://github.com/pvstodghill/pipeline-trycycler.git
 ```
 
-Now install [NextPolish](https://github.com/Nextomics/NextPolish) and
-add its directory to the `\$PATH`.
+## Installing prereqs
+
+One of the following:
+
+<!-- - [Docker](https://www.docker.com/) -->
+<!-- - [Singularity](https://sylabs.io/) -->
+<!-- - [Apptainer](https://apptainer.org/) -->
+- [Conda](https://conda.io)
+
+You will also need,
+
+- [Snakemake](https://snakemake.readthedocs.io/)
+- [Perl](https://www.perl.org/)
+- [Perl's YAML module](https://metacpan.org/dist/YAML)
+
+## Configuring the pipeline
+
+**Create the configuration files**
+
+To run the pipeline on your own data,
+
+1. Copy `config.template.yaml` to `config.yaml`.  Edit `config.yaml` according to your needs and local environment.
+
+FIXME: document the rest of the config files
+
+## Running the pipeline
+
+To run the pipeline using local copies of the software components:
+
+~~~
+snakemake
+~~~
+
+To run the pipeline using [Conda](https://conda.io) to provide software components:
+
+~~~
+snakemake --use-conda
+~~~
+
+To run the pipeline using [Mamba](https://mamba.readthedocs.io) to provide software components:
+
+~~~
+snakemake --use-conda --conda-frontend mamba
+~~~
+
+## Software components
+
+The following software is used by this pipeline,
+
+- FIXME
