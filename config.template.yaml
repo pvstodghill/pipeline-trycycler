@@ -5,8 +5,53 @@
 # # Where to put output files
 # data: data
 
+strain: P82d
+version: 
+
+genome_size: 5m
+
+########################################################################
+# Input files
+########################################################################
+
 nanopore: ~/midden/2024/05-07-plasmidsaurus-jea33-pag-nanopore/Asselin_H4S_results/Asselin_H4S_3/reads/raw_reads.fastq.gz
 short_R1: ~/midden/2024/05-16-plasmidsaurus-jea33-pag-illumina/Asselin_H4S_polished_results/Asselin_H4S_3_polish/Asselin_H4S_3_S70_R1_001.fastq.gz
 short_R2: ~/midden/2024/05-16-plasmidsaurus-jea33-pag-illumina/Asselin_H4S_polished_results/Asselin_H4S_3_polish/Asselin_H4S_3_S70_R2_001.fastq.gz
 
-  
+########################################################################
+# Input files
+########################################################################
+
+num_asms_flye: 5
+num_asms_minipolish: 5
+num_asms_raven: 5
+
+# #CLUSTER_ARGS="--distance 0.01" # default
+# #CLUSTER_ARGS="--distance 0.02" # more permissive
+# #CLUSTER_ARGS="--distance 0.005" # more strict
+
+# FASTP_ADAPTER_ARGS= # Use auto-detection method
+# #FASTP_ADAPTER_ARGS=--adapter_fasta inputs/NEBnext_PE.fa
+# #SKIP_FASTP=true # Illumina reads are already trimmed
+
+# #REFSEEK=$HOME/scratch/referenceseeker
+
+# # ------------------------------------------------------------------------
+
+# # Uncomment to get packages from HOWTO
+# PACKAGES_FROM=howto
+
+# # uncomment to use conda
+# #PACKAGES_FROM=conda
+# #CONDA_EXE=$(type -p conda)
+# #CONDA_ENV=pipeline-trycycler
+
+# # ------------------------------------------------------------------------
+
+# # BioHPC-specific settings
+
+# if [ -e /programs/docker/bin/docker1 ] ; then
+#     export HOWTO_DOCKER_CMD=/programs/docker/bin/docker1
+#     THREADS=32
+# fi
+
