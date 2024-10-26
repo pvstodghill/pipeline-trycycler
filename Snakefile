@@ -30,7 +30,7 @@ ASSEMBLIES= \
 
 rule all:
     input:
-        ASSEMBLIES,
+        directory(DATA+"/clusters"),
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -181,3 +181,26 @@ rule run_raven:
  	      --disable-checkpoints \
               {input}  > {output.fna}
         """
+
+# ------------------------------------------------------------------------
+# cluster the contigs from the different assembles
+# ------------------------------------------------------------------------
+
+rule run_trycycler_cluster:
+    input:
+        assemblies=ASSEMBLIES,
+        long_reads=DATA+"/filtlong/filtered_nanopore.fastq.gz"
+    output: directory(DATA+"/clusters")
+    params: config['cluster_args'] if 'cluster_args' in config else ''
+    threads: 9999
+    conda: "envs/trycycler.yaml"
+    shell:
+        """
+        trycycler cluster \
+            {params} \
+            --threads {threads} \
+            --assemblies {input.assemblies} \
+            --reads {input.long_reads} \
+            --out_dir {output}
+        """
+        
