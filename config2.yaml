@@ -1,0 +1,11 @@
+########################################################################
+# Trycycler reconciliation parameters
+########################################################################
+
+remove_contigs: H_utg000003l M_Utg998
+
+#reconcile_args: --max_add_seq 2000
+#reconcile_args_004: --min_identity 97.0 # special case cluster_004
+
+#MAKE_DOTPLOTS=true # make dotplots for clusters that fail to reconcile
+
