@@ -1,11 +1,17 @@
 import os
+import glob
 
-configfile: "config.template.yaml" # fixme!
+configfile: "config1.yaml"
+configfile: "config2.yaml"
 
-DATA=config['data'] if 'data' in config else "data"
+def get_config(name, default):
+    return config[name] if name in config else default
+
+
+DATA=get_config('data','data')
 PIPELINE=os.path.dirname(workflow.snakefile)
 
-GENOME_SIZE = config['genome_size'] if 'genome_size' in config else '5m'
+GENOME_SIZE = get_config('genome_size','5m')
 
 GZIP="pigz"
 
@@ -28,9 +34,16 @@ ASSEMBLIES= \
 # Entry point
 # ------------------------------------------------------------------------
 
+def list_of_clusters(wildcards):
+    ckp = checkpoints.make_reconciled.get(**wildcards).output[0]
+    clusters = glob.glob(DATA+"/reconciled/cluster_*")
+    return list(clusters)
+    #return expand(ckp_reconciled_dir+"/cluster_{i}",i=clusters)
+
+
 rule all:
     input:
-        directory(DATA+"/clusters"),
+        expand("{cluster}/2_all_seqs.fasta",cluster=list_of_clusters),
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -204,3 +217,100 @@ rule run_trycycler_cluster:
             --out_dir {output}
         """
         
+# ------------------------------------------------------------------------
+# copy clusters; eliminate clusters, contigs, etc., as needed
+# ------------------------------------------------------------------------
+
+# Cribbed from <https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#data-dependent-conditional-execution>
+
+checkpoint make_reconciled:
+    input:
+        clusters=DATA+"/clusters",
+        config="config2.yaml"
+    output: directory(DATA+"/reconciled")
+    params:
+        clusters_to_remove = get_config('remove_clusters',''),
+        contigs_to_remove = get_config('remove_contigs',''),
+        assemblies_to_remove = get_config('remove_assemblies',''),
+    shell:
+        """
+        rm -rf {output}
+        cp --archive {input.clusters} {output}
+
+        # remove clusters
+        for index in {params.clusters_to_remove} ; do
+            if [ -e {output}/${{index}} ] ; then
+                path={output}/${{index}}
+            elif [ -e {output}/cluster_00${{index}} ] ; then
+                path={output}/cluster_00${{index}}
+            elif [ -e {output}/cluster_0${{index}} ] ; then
+                path={output}/cluster_0${{index}}
+            elif [ -e {output}/cluster_${{index}} ] ; then
+                path={output}/cluster_${{index}}
+            fi
+            if [ "$path" ] ; then
+                echo "## removing cluster $index"
+                (
+                    set -x
+                    rm -rf $path
+                )
+            fi
+        done
+
+        # remove contigs
+        (
+            shopt -s nullglob
+            for name in {params.contigs_to_remove} ; do
+                echo "## removing contig $name"
+                paths="$(echo {output}/cluster_*/1_contigs/$name.fasta)"
+                for path in $paths ; do
+                    (
+                        set -x
+                        rm -f $path
+                    )
+                    cluster_xxx=$(dirname $(dirname $path))
+                    rm -f ${{cluster_xxx}}/2_all_seqs.fasta
+                done
+            done
+        )
+
+        # remove assemblies
+        (
+            shopt -s nullglob
+            for letter in {params.assemblies_to_remove} ; do
+                echo "## removing assembly $letter"
+                paths="$(echo {output}/cluster_*/1_contigs/${{letter}}_*.fasta)"
+                for path in $paths ; do
+                    (
+                        set -x
+                        rm -f $path
+                    )
+                    cluster_xxx=$(dirname $(dirname $path))
+                    rm -f ${{cluster_xxx}}/2_all_seqs.fasta
+                done
+            done
+        )
+        """
+
+# ------------------------------------------------------------------------
+# reconcile the contigs in each cluster
+# ------------------------------------------------------------------------
+
+rule run_trycycler_reconcile:
+    input:
+        contigs=DATA+"/reconciled/{cluster}/1_contigs",
+        long_reads=DATA+"/filtlong/filtered_nanopore.fastq.gz"
+    output: DATA+"/reconciled/{cluster}/2_all_seqs.fasta"
+    params:
+        args_global=get_config('reconcile_args',''),
+        args_cluster=get_config('reconcile_args_{cluster}','')
+    threads: 9999
+    conda: "envs/trycycler.yaml"
+    shell:
+        """
+        trycycler reconcile \
+                --threads {threads} \
+                --reads {input.long_reads} \
+                --cluster_dir $(dirname {input.contigs}) \
+                {params.args_global} {params.args_cluster}
+        """
