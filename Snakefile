@@ -43,7 +43,7 @@ def list_of_clusters(wildcards):
 
 rule all:
     input:
-        expand("{cluster}/2_all_seqs.fasta",cluster=list_of_clusters),
+        expand("{cluster}/3_msa.fasta",cluster=list_of_clusters),
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -313,4 +313,20 @@ rule run_trycycler_reconcile:
                 --reads {input.long_reads} \
                 --cluster_dir $(dirname {input.contigs}) \
                 {params.args_global} {params.args_cluster}
+        """
+
+# ------------------------------------------------------------------------
+# multiple sequence alignment (MSA)
+# ------------------------------------------------------------------------
+
+rule run_trycycler_msa:
+    input: DATA+"/reconciled/{cluster}/2_all_seqs.fasta"
+    output: DATA+"/reconciled/{cluster}/3_msa.fasta"
+    threads: 9999
+    conda: "envs/trycycler.yaml"
+    shell:
+        """
+        trycycler msa \
+                --threads {threads} \
+                --cluster_dir $(dirname {input})
         """
