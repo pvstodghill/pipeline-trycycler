@@ -43,7 +43,7 @@ def list_of_clusters(wildcards):
 
 rule all:
     input:
-        expand("{cluster}/3_msa.fasta",cluster=list_of_clusters),
+        expand("{cluster}/4_reads.fastq",cluster=list_of_clusters),
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -329,4 +329,23 @@ rule run_trycycler_msa:
         trycycler msa \
                 --threads {threads} \
                 --cluster_dir $(dirname {input})
+        """
+
+# ------------------------------------------------------------------------
+# Partition long reads across clusters
+# ------------------------------------------------------------------------
+
+rule run_trycycler_partition:
+    input:
+        contig=DATA+"/reconciled/{cluster}/3_msa.fasta",
+        long_reads=DATA+"/filtlong/filtered_nanopore.fastq.gz"
+    output: DATA+"/reconciled/{cluster}/4_reads.fastq"
+    threads: 9999
+    conda: "envs/trycycler.yaml"
+    shell:
+        """
+        trycycler partition \
+                 --threads {threads} \
+                 --reads {input.long_reads} \
+                 --cluster_dirs $(dirname {input.contig})
         """
