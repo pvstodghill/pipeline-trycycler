@@ -44,8 +44,8 @@ def list_of_clusters(wildcards):
 rule all:
     input:
         DATA+"/reconciled/polished.fasta",
-        DATA+"/inputs/raw_short_R1.fastq.gz",
-        DATA+"/inputs/raw_short_R2.fastq.gz",
+        DATA+"/fastp/trimmed_R1.fastq.gz",
+        DATA+"/fastp/trimmed_R2.fastq.gz",
 
 
 # ------------------------------------------------------------------------
@@ -404,4 +404,31 @@ rule make_polished_fasta:
     input: expand("{cluster}/consensus.fasta",cluster=list_of_clusters)
     output: DATA+"/reconciled/polished.fasta"
     shell: "cat {input} > {output}"
+
+# ------------------------------------------------------------------------
+# Trim and filter the short reads
+# ------------------------------------------------------------------------
+
+rule run_fastp:
+    input:
+        r1=DATA+"/inputs/raw_short_R1.fastq.gz",
+        r2=DATA+"/inputs/raw_short_R2.fastq.gz"
+    output:
+        r1=DATA+"/fastp/trimmed_R1.fastq.gz",
+        r2=DATA+"/fastp/trimmed_R2.fastq.gz",
+        u=DATA+"/fastp/u.fastq.gz",
+        json=DATA+"/fastp/fastp.json",
+        html=DATA+"/fastp/fastp.html",
+    threads: 9999
+    conda: "envs/fastp.yaml"
+    shell:
+        """
+        fastp \
+            --thread {threads} \
+            --json {output.json} --html {output.html} \
+            --in1 {input.r1} --in2 {input.r2}  \
+            --out1 {output.r1} --out2 {output.r2} \
+            --unpaired1 {output.u} --unpaired2 {output.u}
+        """
+
 
