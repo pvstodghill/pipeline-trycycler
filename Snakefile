@@ -536,11 +536,40 @@ if get_config('refseek_dir') != None:
                 | tee {output}
             """
 
+# ------------------------------------------------------------------------
+# "Normalize" the genome.
+# ------------------------------------------------------------------------
+
+rule normalize_genome:
+    input: DATA+"/pypolca/pypolca_corrected.fasta"
+    output: DATA+"/normalized/normalized.fasta"
+    params:
+        strain=get_config('strain'),
+        version=get_config('version',''),
+        linear=get_config('linear_contigs','')
+    conda: "envs/normalize.yaml"
+    shell:
+        """
+        dir=$(dirname {output})
+
+        cat {input} \
+            | {PIPELINE}/scripts/dephix \
+                  > $dir/unnormalized.fasta
+
+        {PIPELINE}/scripts/normalize-assembly \
+            -d $dir/tmp \
+            -f {PIPELINE}/inputs/starts.faa \
+            -l "{params.linear}" \
+            $dir/unnormalized.fasta {params.strain}{params.version}_ \
+            > {output}
+        """
+
 # ========================================================================
 
 rule all:
     input:
         DATA+"/referenceseeker.log",
-        DATA+"/dnadiff/out.report"
+        DATA+"/dnadiff/out.report",
+        DATA+"/normalized/normalized.fasta"
     default_target: True
 

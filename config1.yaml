@@ -31,6 +31,17 @@ num_asms_raven: 5
 #cluster_args: --distance 0.005 # more strict
 
 ########################################################################
+# Known after assembly
+########################################################################
+
+# The linear contigs.
+# - These contigs will not be rotated to a heuristically better origin.
+# - The names used are the ones assigned by `normalize_assembly`
+#   (e.g., "J22c_plasmidD"). So, this stage might have to be run twice.
+# - Names are comma separated with no spaces.
+linear_contigs: 
+
+########################################################################
 # Paths to Referenceseeker, PGAP, etc.
 ########################################################################
 
