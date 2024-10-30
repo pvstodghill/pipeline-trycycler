@@ -478,6 +478,47 @@ rule run_pypolca:
         """
 
 # ------------------------------------------------------------------------
+# Run Unicycler
+# ------------------------------------------------------------------------
+
+rule run_unicycler:
+    input:
+        short_r1=DATA+"/fastp/trimmed_R1.fastq.gz",
+        short_r2=DATA+"/fastp/trimmed_R2.fastq.gz",
+        long_reads=DATA+"/filtlong/filtered_nanopore.fastq.gz",
+    output: DATA+"/unicycler/assembly.fasta"
+    threads: 9999
+    conda: "envs/unicycler.yaml"
+    shell:
+        """
+        unicycler -t {threads} \
+          -1 {input.short_r1} \
+          -2 {input.short_r2} \
+          -l {input.long_reads} \
+          -o $(dirname {output})
+        """
+            
+
+# ------------------------------------------------------------------------
+# Compare Trycycler and Unicycler results with `dnadiff`
+# ------------------------------------------------------------------------
+
+rule run_dnadiff:
+    input:
+        tryc=DATA+"/pypolca/pypolca_corrected.fasta",
+        unic=DATA+"/unicycler/assembly.fasta"
+    output: DATA+"/dnadiff/out.report"
+    conda: "envs/mummer4.yaml"
+    shell:
+        """
+        dir=$(dirname {output})
+        cp {input.tryc} $dir/trycycler.fasta
+        cp {input.unic} $dir/unicycler.fasta
+        cd $dir
+        dnadiff trycycler.fasta unicycler.fasta
+        """
+
+# ------------------------------------------------------------------------
 # Run ReferenceSeeker
 # ------------------------------------------------------------------------
 
@@ -499,6 +540,7 @@ if get_config('refseek_dir') != None:
 
 rule all:
     input:
-        DATA+"/referenceseeker.log"
+        DATA+"/referenceseeker.log",
+        DATA+"/dnadiff/out.report"
     default_target: True
 
