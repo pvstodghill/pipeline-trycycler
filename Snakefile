@@ -4,7 +4,7 @@ import glob
 configfile: "config1.yaml"
 configfile: "config2.yaml"
 
-def get_config(name, default):
+def get_config(name, default=None):
     return config[name] if name in config else default
 
 
@@ -477,10 +477,28 @@ rule run_pypolca:
             -t {threads} -o $(dirname {output}) --careful
         """
 
+# ------------------------------------------------------------------------
+# Run ReferenceSeeker
+# ------------------------------------------------------------------------
+
+if get_config('refseek_dir') != None:
+    rule run_referenceseeker:
+        input: DATA+"/pypolca/pypolca_corrected.fasta"
+        output: DATA+"/referenceseeker.log"
+        params:
+            refseek_dir=os.path.expanduser(get_config('refseek_dir'))
+        conda: "envs/referenceseeker.yaml"
+        shell:
+            """
+            REFSEEK={params.refseek_dir} \
+            {PIPELINE}/scripts/run-referenceseeker -r {input} \
+                | tee {output}
+            """
+
 # ========================================================================
 
 rule all:
     input:
-        DATA+"/pypolca/pypolca_corrected.fasta"
+        DATA+"/referenceseeker.log"
     default_target: True
 

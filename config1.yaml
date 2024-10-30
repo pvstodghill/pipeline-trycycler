@@ -30,3 +30,10 @@ num_asms_raven: 5
 #cluster_args: --distance 0.02 # more permissive
 #cluster_args: --distance 0.005 # more strict
 
+########################################################################
+# Paths to Referenceseeker, PGAP, etc.
+########################################################################
+
+refseek_dir: ~/scratch/referenceseeker
+
+
