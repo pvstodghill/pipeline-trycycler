@@ -41,13 +41,6 @@ def list_of_clusters(wildcards):
     #return expand(ckp_reconciled_dir+"/cluster_{i}",i=clusters)
 
 
-rule all:
-    input:
-        DATA+"/reconciled/polished.fasta",
-        DATA+"/fastp/trimmed_R1.fastq.gz",
-        DATA+"/fastp/trimmed_R2.fastq.gz",
-
-
 # ------------------------------------------------------------------------
 # Collect inputs
 # ------------------------------------------------------------------------
@@ -431,4 +424,63 @@ rule run_fastp:
             --unpaired1 {output.u} --unpaired2 {output.u}
         """
 
+# ------------------------------------------------------------------------
+# Run Polypolish
+# ------------------------------------------------------------------------
+
+rule run_polypolish:
+    input:
+        draft=DATA+"/reconciled/polished.fasta",
+        r1=DATA+"/fastp/trimmed_R1.fastq.gz",
+        r2=DATA+"/fastp/trimmed_R2.fastq.gz",
+    output: DATA+"/polypolish/polished.fasta"
+    threads: 9999
+    conda: "envs/polypolish.yaml"
+    shell:
+        """
+        dir=$(dirname {output})
+        cp {input.draft} $dir/draft.fasta
+        cp {input.r1} $dir/r1.fastq.gz
+        cp {input.r2} $dir/r2.fastq.gz
+        len=$({PIPELINE}/scripts/fasta-length -t $dir/draft.fasta)
+        coverage=$({PIPELINE}/scripts/fastq-coverage -p 0 -g $len $dir/draft.fasta $dir/r1.fastq.gz $dir/r2.fastq.gz)
+        cd $dir
+        bwa index draft.fasta
+        bwa mem -t {threads} -a draft.fasta r1.fastq.gz > align1.sam
+        bwa mem -t {threads} -a draft.fasta r2.fastq.gz > align2.sam
+        polypolish filter \
+            --in1 align1.sam --in2 align2.sam \
+            --out1 filtered1.sam --out2 filtered2.sam
+        if [ $coverage -le 25 ] ; then
+            CAREFUL=--careful
+        else
+            CAREFUL=
+        fi
+        polypolish polish $CAREFUL draft.fasta filtered1.sam filtered2.sam > polished.fasta
+        """
+
+# ------------------------------------------------------------------------
+# Run Pypolca
+# ------------------------------------------------------------------------
+
+rule run_pypolca:
+    input:
+        draft=DATA+"/polypolish/polished.fasta",
+        r1=DATA+"/fastp/trimmed_R1.fastq.gz",
+        r2=DATA+"/fastp/trimmed_R2.fastq.gz",
+    output: DATA+"/pypolca/pypolca_corrected.fasta"
+    threads: 16 # weird samtools memory problem
+    conda: "envs/pypolca.yaml"
+    shell:
+        """
+        pypolca run --force -a {input.draft} -1 {input.r1} -2 {input.r2} \
+            -t {threads} -o $(dirname {output}) --careful
+        """
+
+# ========================================================================
+
+rule all:
+    input:
+        DATA+"/pypolca/pypolca_corrected.fasta"
+    default_target: True
 
