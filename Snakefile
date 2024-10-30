@@ -43,7 +43,7 @@ def list_of_clusters(wildcards):
 
 rule all:
     input:
-        expand("{cluster}/4_reads.fastq",cluster=list_of_clusters),
+        DATA+"/reconciled/consensus.fasta",
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -227,26 +227,27 @@ checkpoint make_reconciled:
     input:
         clusters=DATA+"/clusters",
         config="config2.yaml"
-    output: directory(DATA+"/reconciled")
+    output: DATA+"/reconciled/.done.txt"
     params:
         clusters_to_remove = get_config('remove_clusters',''),
         contigs_to_remove = get_config('remove_contigs',''),
         assemblies_to_remove = get_config('remove_assemblies',''),
     shell:
         """
-        rm -rf {output}
-        cp --archive {input.clusters} {output}
+        dir=$(dirname {output})
+        rm -rf $dir
+        cp --archive {input.clusters} $dir
 
         # remove clusters
         for index in {params.clusters_to_remove} ; do
-            if [ -e {output}/${{index}} ] ; then
-                path={output}/${{index}}
-            elif [ -e {output}/cluster_00${{index}} ] ; then
-                path={output}/cluster_00${{index}}
-            elif [ -e {output}/cluster_0${{index}} ] ; then
-                path={output}/cluster_0${{index}}
-            elif [ -e {output}/cluster_${{index}} ] ; then
-                path={output}/cluster_${{index}}
+            if [ -e $dir/${{index}} ] ; then
+                path=$dir/${{index}}
+            elif [ -e $dir/cluster_00${{index}} ] ; then
+                path=$dir/cluster_00${{index}}
+            elif [ -e $dir/cluster_0${{index}} ] ; then
+                path=$dir/cluster_0${{index}}
+            elif [ -e $dir/cluster_${{index}} ] ; then
+                path=$dir/cluster_${{index}}
             fi
             if [ "$path" ] ; then
                 echo "## removing cluster $index"
@@ -262,7 +263,7 @@ checkpoint make_reconciled:
             shopt -s nullglob
             for name in {params.contigs_to_remove} ; do
                 echo "## removing contig $name"
-                paths="$(echo {output}/cluster_*/1_contigs/$name.fasta)"
+                paths="$(echo $dir/cluster_*/1_contigs/$name.fasta)"
                 for path in $paths ; do
                     (
                         set -x
@@ -279,7 +280,7 @@ checkpoint make_reconciled:
             shopt -s nullglob
             for letter in {params.assemblies_to_remove} ; do
                 echo "## removing assembly $letter"
-                paths="$(echo {output}/cluster_*/1_contigs/${{letter}}_*.fasta)"
+                paths="$(echo $dir/cluster_*/1_contigs/${{letter}}_*.fasta)"
                 for path in $paths ; do
                     (
                         set -x
@@ -290,6 +291,8 @@ checkpoint make_reconciled:
                 done
             done
         )
+
+        touch {output}
         """
 
 # ------------------------------------------------------------------------
@@ -337,9 +340,9 @@ rule run_trycycler_msa:
 
 rule run_trycycler_partition:
     input:
-        contig=DATA+"/reconciled/{cluster}/3_msa.fasta",
+        contigs=expand("{cluster}/3_msa.fasta",cluster=list_of_clusters),
         long_reads=DATA+"/filtlong/filtered_nanopore.fastq.gz"
-    output: DATA+"/reconciled/{cluster}/4_reads.fastq"
+    output: DATA+"/reconciled/.done2.txt"
     threads: 9999
     conda: "envs/trycycler.yaml"
     shell:
@@ -347,5 +350,33 @@ rule run_trycycler_partition:
         trycycler partition \
                  --threads {threads} \
                  --reads {input.long_reads} \
-                 --cluster_dirs $(dirname {input.contig})
+                 --cluster_dirs $(for c in {input.contigs} ; do dirname $c ; done)
+        touch {output}
         """
+
+# ------------------------------------------------------------------------
+# Generate a consensus sequence for each cluster
+# ------------------------------------------------------------------------
+
+rule run_trycycler_consensus:
+    input:
+        DATA+"/reconciled/.done2.txt",
+        #DATA+"/reconciled/{cluster}/4_reads.fastq"
+    output:
+        gfa=DATA+"/reconciled/{cluster}/5_chunked_sequence.gfa",
+        tmp_fna=DATA+"/reconciled/{cluster}/6_initial_consensus.fasta",
+        fna=DATA+"/reconciled/{cluster}/7_final_consensus.fasta",
+    threads: 9999
+    conda: "envs/trycycler.yaml"
+    shell:
+        """
+        trycycler consensus \
+                 --threads {threads} \
+                 --cluster_dir $(dirname {output.fna})
+        """
+
+rule make_consensus_fna:
+    input: expand("{cluster}/7_final_consensus.fasta",cluster=list_of_clusters)
+    output: DATA+"/reconciled/consensus.fasta"
+    shell: "cat {input} > {output}"
+
