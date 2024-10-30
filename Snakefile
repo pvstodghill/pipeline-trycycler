@@ -43,7 +43,7 @@ def list_of_clusters(wildcards):
 
 rule all:
     input:
-        DATA+"/reconciled/consensus.fasta",
+        DATA+"/reconciled/polished.fasta",
         DATA+"/inputs/raw_short_R1.fastq.gz",
         DATA+"/inputs/raw_short_R2.fastq.gz",
 
@@ -375,8 +375,33 @@ rule run_trycycler_consensus:
                  --cluster_dir $(dirname {output.fna})
         """
 
-rule make_consensus_fna:
+rule make_consensus_fasta:
     input: expand("{cluster}/7_final_consensus.fasta",cluster=list_of_clusters)
     output: DATA+"/reconciled/consensus.fasta"
+    shell: "cat {input} > {output}"
+
+# ------------------------------------------------------------------------
+# Run Medaka to polish consensus assemblies
+# ------------------------------------------------------------------------
+
+rule run_medaka:
+    input:
+        reads=DATA+"/reconciled/{cluster}/4_reads.fastq",
+        consensus=DATA+"/reconciled/{cluster}/7_final_consensus.fasta"
+    output: DATA+"/reconciled/{cluster}/consensus.fasta"
+    threads: 9999
+    conda: "envs/medaka.yaml"
+    shell:
+        """
+        medaka_consensus \
+            -i {input.reads} \
+            -d {input.consensus} \
+            -o $(dirname {output}) \
+            -t {threads}
+        """
+
+rule make_polished_fasta:
+    input: expand("{cluster}/consensus.fasta",cluster=list_of_clusters)
+    output: DATA+"/reconciled/polished.fasta"
     shell: "cat {input} > {output}"
 
