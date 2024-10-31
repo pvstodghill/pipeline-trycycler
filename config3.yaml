@@ -2,7 +2,6 @@
 # Parameters to set once the taxon is known
 ########################################################################
 
-gram: neg # or plus
 genus: Pantoea
 species: agglomerans
 

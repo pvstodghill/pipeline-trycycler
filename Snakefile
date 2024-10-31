@@ -591,15 +591,55 @@ if get_config('pgap_dir') != None:
         shell:
             """
             dir=$(dirname {output.gbk})
+            rm -rf $dir/tmp
             {params.pgap_dir}/pgap.py \
                 --genome {input.genome} \
                 --organism "{params.genus} {params.species}" \
                 --output $dir/tmp \
                 --taxcheck --report-usage-false --quiet --no-internet \
                 --docker apptainer --cpus {threads} --no-self-update
-            cp $dir/tmp/* $dir/.
+            mv $dir/tmp/* $dir/.
             rmdir $dir/tmp
             """
+
+# ------------------------------------------------------------------------
+# Run Prokka
+# ------------------------------------------------------------------------
+
+rule run_prokka:
+    input:
+        genome=DATA+"/normalized/normalized.fasta",
+        config="config2.yaml"
+    output:
+        faa=DATA+"/prokka/output.faa",
+        fna=DATA+"/prokka/output.fna",
+        gbk=DATA+"/prokka/output.gbk",
+        gff=DATA+"/prokka/output.gff",
+    params:
+        strain=get_config('strain'),
+        version=get_config('version',''),
+        gram=get_config('gram'),
+        genus=get_config('genus','FIXME'),
+        species=get_config('species','FIXME'),
+    threads: 9999
+    conda: "envs/prokka.yaml"
+    shell:
+        """
+        dir=$(dirname {output.gbk})
+        rm -rf $dir/tmp
+        prokka --cpus {threads} --quiet \
+                 --outdir $dir/tmp \
+                 --prefix output \
+                 --genus {params.genus} \
+                 --species {params.species} \
+                 --strain {params.strain} \
+                 --locustag {params.strain}{params.version}_prokka \
+                 --rfam --addgenes \
+                 {input.genome}
+        mv $dir/tmp/* $dir/.
+        rmdir $dir/tmp
+        """
+
 
 # ========================================================================
 
@@ -608,5 +648,6 @@ rule all:
         DATA+"/referenceseeker.log",
         DATA+"/dnadiff/out.report",
         DATA+"/pgap/annot.gbk",
+        DATA+"/prokka/output.gbk",
     default_target: True
 
