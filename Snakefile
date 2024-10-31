@@ -3,6 +3,7 @@ import glob
 
 configfile: "config1.yaml"
 configfile: "config2.yaml"
+configfile: "config3.yaml"
 
 def get_config(name, default=None):
     return config[name] if name in config else default
@@ -564,12 +565,48 @@ rule normalize_genome:
             > {output}
         """
 
+# ------------------------------------------------------------------------
+# Run PGAP
+# ------------------------------------------------------------------------
+
+if get_config('pgap_dir') != None:
+
+    rule run_pgap:
+        input:
+            genome=DATA+"/normalized/normalized.fasta",
+            config="config2.yaml"
+        output:
+            faa=DATA+"/pgap/annot.faa",
+            fna=DATA+"/pgap/annot.fna",
+            gbk=DATA+"/pgap/annot.gbk",
+            gff=DATA+"/pgap/annot.gff",
+        params:
+            pgap_dir=os.path.expanduser(get_config('pgap_dir')),
+            strain=get_config('strain'),
+            version=get_config('version',''),
+            genus=get_config('genus','FIXME'),
+            species=get_config('species','FIXME'),
+            pgap_args=' '.join(get_config('pgap_args',[]))
+        threads: 9999
+        shell:
+            """
+            dir=$(dirname {output.gbk})
+            {params.pgap_dir}/pgap.py \
+                --genome {input.genome} \
+                --organism "{params.genus} {params.species}" \
+                --output $dir/tmp \
+                --taxcheck --report-usage-false --quiet --no-internet \
+                --docker apptainer --cpus {threads} --no-self-update
+            cp $dir/tmp/* $dir/.
+            rmdir $dir/tmp
+            """
+
 # ========================================================================
 
 rule all:
     input:
         DATA+"/referenceseeker.log",
         DATA+"/dnadiff/out.report",
-        DATA+"/normalized/normalized.fasta"
+        DATA+"/pgap/annot.gbk",
     default_target: True
 
