@@ -640,7 +640,45 @@ rule run_prokka:
         rmdir $dir/tmp
         """
 
+# ------------------------------------------------------------------------
+# Run Bakta
+# ------------------------------------------------------------------------
 
+if get_config('bakta_db') != None:
+    rule run_bakta:
+        input:
+            genome=DATA+"/normalized/normalized.fasta",
+            config="config2.yaml"
+        output:
+            faa=DATA+"/bakta/output.faa",
+            fna=DATA+"/bakta/output.fna",
+            gbk=DATA+"/bakta/output.gbff",
+            gff=DATA+"/bakta/output.gff3",
+        params:
+            db=get_config('bakta_db'),
+            strain=get_config('strain'),
+            version=get_config('version',''),
+            gram=get_config('gram'),
+            genus=get_config('genus','FIXME'),
+            species=get_config('species','FIXME'),
+        threads: 9999
+        conda: "envs/bakta.yaml"
+        shell:
+            """
+            dir=$(dirname {output.gbk})
+            bakta --db {params.db} \
+                  --prefix output \
+                  --output $dir --force \
+                  --genus {params.genus} \
+                  --species {params.species} \
+                  --strain {params.strain} \
+            	  --complete \
+            	  --threads {threads} \
+	 	  --keep-contig-headers \
+	 	  --compliant \
+                  {input.genome}
+            """
+    
 # ========================================================================
 
 rule all:
@@ -649,5 +687,6 @@ rule all:
         DATA+"/dnadiff/out.report",
         DATA+"/pgap/annot.gbk",
         DATA+"/prokka/output.gbk",
+        DATA+"/bakta/output.gbff",
     default_target: True
 
