@@ -5,10 +5,6 @@
 genus: Pantoea
 species: agglomerans
 
-#busco_lineage:  # use --auto-lineage-prok
-#busco_lineage: FIXME # consult busco --list-datasets
-busco_lineage: enterobacterales
-
 ########################################################################
 # PGAP parameters
 ########################################################################
@@ -20,4 +16,12 @@ pgap_dir: ~/scratch/pgap
 ########################################################################
 
 bakta_db: ~/scratch/bakta/db
+
+########################################################################
+# BUSCO parameters
+########################################################################
+
+#busco_lineage:  # use --auto-lineage-prok
+#busco_lineage: FIXME # consult busco --list-datasets
+busco_lineage: enterobacterales
 

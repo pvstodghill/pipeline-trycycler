@@ -740,7 +740,58 @@ else:
             cp {input.gbk} {output.gbk}
             cp {input.gff} {output.gff}
             """
-        
+
+# ------------------------------------------------------------------------
+# Run BUSCO
+# ------------------------------------------------------------------------
+
+rule run_busco:
+    input: DATA+"/final.faa"
+    output: DATA+"/busco/done.txt"
+    params:
+        lineage_arg = ('--lineage_dataset '+config['busco_lineage']) if 'busco_lineage' in config else '--auto-lineage-prok'
+    threads: 9999
+    conda: "envs/busco.yaml"
+    shell:
+        """
+        dir=$(dirname {output})
+        busco \
+            -q \
+            -i {input} \
+            -o $dir/output \
+            -m proteins \
+            {params.lineage_arg} \
+            -c {threads} \
+            --download_path $dir/downloads
+        touch {output}
+        """
+
+# ------------------------------------------------------------------------
+# Generate BUSCO summary
+# ------------------------------------------------------------------------
+
+rule generate_busco_summary:
+    input: DATA+"/busco/done.txt"
+    output: DATA+"/busco/report.txt"
+    params:
+        strain=get_config('strain'),
+    shell:
+        """
+        dir=$(dirname {output})
+        (
+            cd $dir
+
+            echo -e "Name\tdb\tC\tS\tD\tF\tM\tn"
+            echo -n {params.strain}
+            egrep '^'$'\t''C:' /dev/null output/short_summary.specific.*.txt \
+                | sed -r \
+                      -e 's/^output//' \
+                      -e 's|/short_summary.specific.(.+)_odb10.output.txt:|\t\\1|' \
+                      -e 's/[ \t]+$//' \
+                      -e 's/C:([0-9.%]+)\\[S:([0-9.%]+),D:([0-9.%]+)\\],F:([0-9.%]+),M:([0-9.%]+),n:([0-9.%]+)/\\1\t\\2\t\\3\t\\4\t\\5\t\\6/'
+        ) > {output}
+        """
+
 # ========================================================================
 
 rule all:
@@ -750,6 +801,7 @@ rule all:
         DATA+"/pgap/annot.gbk",
         DATA+"/prokka/output.gbk",
         DATA+"/bakta/output.gbff",
-        DATA+"/final.gbk"
+        DATA+"/final.gbk",
+        DATA+"/busco/report.txt",
     default_target: True
 
