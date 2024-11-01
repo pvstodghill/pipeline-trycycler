@@ -679,6 +679,68 @@ if get_config('bakta_db') != None:
                   {input.genome}
             """
     
+# ------------------------------------------------------------------------
+# The final genome
+# ------------------------------------------------------------------------
+
+if get_config('pgap_dir') != None:
+    rule make_final_using_pgap:
+        input:
+            faa=DATA+"/pgap/annot.faa",
+            fna=DATA+"/pgap/annot.fna",
+            gbk=DATA+"/pgap/annot.gbk",
+            gff=DATA+"/pgap/annot.gff",
+        output:
+            faa=DATA+"/final.faa",
+            fna=DATA+"/final.fna",
+            gbk=DATA+"/final.gbk",
+            gff=DATA+"/final.gff",
+        shell:
+            """
+            cp {input.faa} {output.faa}
+            cp {input.fna} {output.fna}
+            cp {input.gbk} {output.gbk}
+            cp {input.gff} {output.gff}
+            """
+elif get_config('bakta_db') != None:
+    rule make_final_using_bakta:
+        input:
+            faa=DATA+"/bakta/output.faa",
+            fna=DATA+"/bakta/output.fna",
+            gbk=DATA+"/bakta/output.gbff",
+            gff=DATA+"/bakta/output.gff3",
+        output:
+            faa=DATA+"/final.faa",
+            fna=DATA+"/final.fna",
+            gbk=DATA+"/final.gbk",
+            gff=DATA+"/final.gff",
+        shell:
+            """
+            cp {input.faa} {output.faa}
+            cp {input.fna} {output.fna}
+            cp {input.gbk} {output.gbk}
+            cp {input.gff} {output.gff}
+            """
+else:
+    rule make_final_using_prokka:
+        input:
+            faa=DATA+"/prokka/output.faa",
+            fna=DATA+"/prokka/output.fna",
+            gbk=DATA+"/prokka/output.gbk",
+            gff=DATA+"/prokka/output.gff",
+        output:
+            faa=DATA+"/final.faa",
+            fna=DATA+"/final.fna",
+            gbk=DATA+"/final.gbk",
+            gff=DATA+"/final.gff",
+        shell:
+            """
+            cp {input.faa} {output.faa}
+            cp {input.fna} {output.fna}
+            cp {input.gbk} {output.gbk}
+            cp {input.gff} {output.gff}
+            """
+        
 # ========================================================================
 
 rule all:
@@ -688,5 +750,6 @@ rule all:
         DATA+"/pgap/annot.gbk",
         DATA+"/prokka/output.gbk",
         DATA+"/bakta/output.gbff",
+        DATA+"/final.gbk"
     default_target: True
 
