@@ -826,9 +826,18 @@ rule make_stats:
             | tee {output}
         """
 
-# ========================================================================
+# # ------------------------------------------------------------------------
+# # Get package versions
+# # ------------------------------------------------------------------------
 
-rule all:
+# rule make_versions:
+#     input: VERSIONS_RESULTS
+
+# ------------------------------------------------------------------------
+# Check Git status
+# ------------------------------------------------------------------------
+
+rule run_git:
     input:
         DATA+"/referenceseeker.log",
         DATA+"/dnadiff/out.report",
@@ -838,5 +847,21 @@ rule all:
         DATA+"/final.gbk",
         DATA+"/busco/report.txt",
         DATA+"/stats.tsv"
+    output: DATA+"/git.log"
+    shell:
+        """
+	(
+	    cd {PIPELINE}
+	    echo
+	    ( set -x ; git status )
+	    echo
+	    ( set -x ; git log -n1 )
+	) 2>&1 | tee {output}
+        """ 
+
+# ========================================================================
+
+rule all:
+    input: DATA+"/git.log"
     default_target: True
 
