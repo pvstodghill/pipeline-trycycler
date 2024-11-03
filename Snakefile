@@ -792,6 +792,40 @@ rule generate_busco_summary:
         ) > {output}
         """
 
+# ------------------------------------------------------------------------
+# Compute stats
+# ------------------------------------------------------------------------
+
+rule make_stats:
+    input:
+        raw_long=DATA+"/inputs/raw_nanopore.fastq.gz",
+        filtered_long=DATA+"/filtlong/filtered_nanopore.fastq.gz",
+        raw_r1=DATA+"/inputs/raw_short_R1.fastq.gz",
+        raw_r2=DATA+"/inputs/raw_short_R2.fastq.gz",
+        trimmed_r1=DATA+"/fastp/trimmed_R1.fastq.gz",
+        trimmed_r2=DATA+"/fastp/trimmed_R2.fastq.gz",
+        final_fna=DATA+"/final.fna",
+        final_gff=DATA+"/final.gff",
+    output: DATA+"/stats.tsv"
+    params:
+        args="-q -s",
+        strain=get_config('strain'),
+        version=get_config('version'),
+    threads: 9999
+    conda: "envs/make_stats.yaml"
+    shell:
+        """
+        {PIPELINE}/scripts/compute-assembly-stats \
+            -t {threads} \
+            {params.args} -S {params.strain}{params.version} \
+            {input.raw_long} {input.filtered_long} \
+            {input.raw_r1} {input.raw_r2} \
+            {input.trimmed_r1} {input.trimmed_r2} \
+            {input.final_fna} \
+            {input.final_gff} \
+            | tee {output}
+        """
+
 # ========================================================================
 
 rule all:
@@ -803,5 +837,6 @@ rule all:
         DATA+"/bakta/output.gbff",
         DATA+"/final.gbk",
         DATA+"/busco/report.txt",
+        DATA+"/stats.tsv"
     default_target: True
 
